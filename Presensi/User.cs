@@ -16,5 +16,10 @@ namespace Presensi
         {
             InitializeComponent();
         }
+
+        private void User_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

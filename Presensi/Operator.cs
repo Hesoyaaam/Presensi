@@ -16,5 +16,16 @@ namespace Presensi
         {
             InitializeComponent();
         }
+
+        private void Operator_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void btnKeluar_Click(object sender, EventArgs e)
+        {
+            Form1 formLogin = new Form1();
+            formLogin.Show();
+            this.Hide();
+        }
     }
 }
