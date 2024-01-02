@@ -19,9 +19,9 @@ namespace Presensi
         public Form1()
         {
             InitializeComponent();
+            txtPassword.PasswordChar = '*';
         }
-
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void btnLogin_Click_1(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
             string password = txtPassword.Text;
@@ -88,17 +88,10 @@ namespace Presensi
                 conn.Close();
             }
         }
-
-        private void btnClear_Click(object sender, EventArgs e)
+        private void btnClear_Click_1(object sender, EventArgs e)
         {
             txtUsername.Text = "";
             txtPassword.Text = "";
-        }
-
-        private void txtPassword_TextChanged(object sender, EventArgs e)
-        {
-            txtPassword.ForeColor = Color.Black;
-            txtPassword.PasswordChar = '*';
         }
     }
 }

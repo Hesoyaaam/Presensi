@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Drawing.Printing;
+using System.IO;
 
 namespace Presensi
 {
@@ -33,13 +35,11 @@ namespace Presensi
             {
                 conn.Open();
 
-                // Select only necessary columns from 'karyawan'
                 MySqlCommand cmd = new MySqlCommand("SELECT id_karyawan, nama_karyawan, jabatan FROM karyawan", conn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataTable karyawanDataTable = new DataTable();
                 adapter.Fill(karyawanDataTable);
 
-                // Add columns for username and password
                 karyawanDataTable.Columns.Add("username", typeof(string));
                 karyawanDataTable.Columns.Add("password", typeof(string));
 
@@ -60,8 +60,6 @@ namespace Presensi
                         }
                     }
                 }
-
-                // Bind DataGridView to DataTable
                 dataGridViewKaryawan.DataSource = karyawanDataTable;
 
                 conn.Close();
@@ -97,6 +95,13 @@ namespace Presensi
             {
                 MessageBox.Show("Error loading attendance data: " + ex.Message);
             }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
         }
         private void LoadDataJadwal()
         {
@@ -104,12 +109,10 @@ namespace Presensi
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT id_jadwal, tanggal, jam_masuk, jam_selesai, keterangan, id_karyawan FROM jadwal", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT id_jadwal, tanggal, jam_masuk, jam_selesai, keterangan FROM jadwal", conn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataTable jadwalDataTable = new DataTable();
                 adapter.Fill(jadwalDataTable);
-
-                // Add additional logic if needed
 
                 dataGridViewJadwal.DataSource = jadwalDataTable;
 
@@ -139,18 +142,15 @@ namespace Presensi
                 {
                     try
                     {
-                        // Insert into 'karyawan' table
                         MySqlCommand insertKaryawanCmd = new MySqlCommand("INSERT INTO karyawan (nama_karyawan, jabatan) VALUES (@nama, @jabatan); SELECT LAST_INSERT_ID();", conn, transaction);
                         insertKaryawanCmd.Parameters.AddWithValue("@nama", txtNamaKaryawan.Text);
                         insertKaryawanCmd.Parameters.AddWithValue("@jabatan", txtJabatan.Text);
 
                         int karyawanId = Convert.ToInt32(insertKaryawanCmd.ExecuteScalar());
 
-                        // Use values from txtUsername and txtPassword
                         string username = txtUsername.Text;
                         string password = txtPassword.Text;
 
-                        // Insert into 'login' table with provided username and password
                         MySqlCommand insertLoginCmd = new MySqlCommand("INSERT INTO login (username, password, `level`, id_karyawan) VALUES (@username, @password, @level, @id_karyawan);", conn, transaction);
                         insertLoginCmd.Parameters.AddWithValue("@username", username);
                         insertLoginCmd.Parameters.AddWithValue("@password", password);
@@ -158,18 +158,13 @@ namespace Presensi
                         insertLoginCmd.Parameters.AddWithValue("@id_karyawan", karyawanId);
                         insertLoginCmd.ExecuteNonQuery();
 
-                        // Commit the transaction
                         transaction.Commit();
 
-                        // Close the database connection
                         conn.Close();
-
-                        // Refresh the data in the DataGridView
                         LoadDataKaryawan();
                     }
                     catch (Exception ex)
                     {
-                        // An error occurred, rollback the transaction
                         transaction.Rollback();
                         throw;
                     }
@@ -181,7 +176,6 @@ namespace Presensi
             }
             finally
             {
-                // Always close the database connection in a finally block
                 if (conn.State == ConnectionState.Open)
                 {
                     conn.Close();
@@ -200,12 +194,12 @@ namespace Presensi
                         MySqlCommand updateKaryawanCmd = new MySqlCommand("UPDATE karyawan SET nama_karyawan = @nama, jabatan = @jabatan WHERE id_karyawan = @id", conn, transaction);
                         updateKaryawanCmd.Parameters.AddWithValue("@nama", txtNamaKaryawan.Text);
                         updateKaryawanCmd.Parameters.AddWithValue("@jabatan", txtJabatan.Text);
-                        updateKaryawanCmd.Parameters.AddWithValue("@id", GetSelectedKaryawanId()); // You need to implement this method
+                        updateKaryawanCmd.Parameters.AddWithValue("@id", GetSelectedKaryawanId()); 
                         updateKaryawanCmd.ExecuteNonQuery();
 
                         MySqlCommand updateLoginCmd = new MySqlCommand("UPDATE login SET `level` = @level WHERE id_karyawan = @id_karyawan", conn, transaction);
                         updateLoginCmd.Parameters.AddWithValue("@level", GetLevelFromJabatan(txtJabatan.Text));
-                        updateLoginCmd.Parameters.AddWithValue("@id_karyawan", GetSelectedKaryawanId()); // You need to implement this method
+                        updateLoginCmd.Parameters.AddWithValue("@id_karyawan", GetSelectedKaryawanId()); 
                         updateLoginCmd.ExecuteNonQuery();
 
                         transaction.Commit();
@@ -236,16 +230,17 @@ namespace Presensi
             try
             {
                 conn.Open();
+
                 using (MySqlTransaction transaction = conn.BeginTransaction())
                 {
                     try
                     {
                         int selectedKaryawanId = GetSelectedKaryawanId();
 
-                        if (selectedKaryawanId != -1) 
+                        if (selectedKaryawanId != -1)
                         {
                             MySqlCommand deleteLoginCmd = new MySqlCommand("DELETE FROM login WHERE id_karyawan = @id_karyawan", conn, transaction);
-                            deleteLoginCmd.Parameters.AddWithValue("@karyawanId", selectedKaryawanId);
+                            deleteLoginCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
                             deleteLoginCmd.ExecuteNonQuery();
 
                             MySqlCommand deleteKaryawanCmd = new MySqlCommand("DELETE FROM karyawan WHERE id_karyawan = @id", conn, transaction);
@@ -267,6 +262,14 @@ namespace Presensi
             catch (Exception ex)
             {
                 MessageBox.Show("Error deleting employee: " + ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+                LoadDataKaryawan();
             }
         }
         private string GetLevelFromJabatan(string jabatan)
@@ -303,10 +306,11 @@ namespace Presensi
             {
                 int selectedKaryawanId = GetSelectedKaryawanId();
 
-                if(selectedKaryawanId != -1){
+                if (selectedKaryawanId != -1)
+                {
                     conn.Open();
 
-                    MySqlCommand tambahPresensiCmd =  new MySqlCommand("INSERT INTO presensi (id_karyawan) VALUES (@id_karyawan)", conn);
+                    MySqlCommand tambahPresensiCmd = new MySqlCommand("INSERT INTO presensi (id_karyawan) VALUES (@id_karyawan)", conn);
                     tambahPresensiCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
 
                     tambahPresensiCmd.ExecuteNonQuery();
@@ -321,7 +325,7 @@ namespace Presensi
                     MessageBox.Show("Pilih karyawan terlebih dahulu");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error mebambahkan presesni" + ex.Message);
             }
@@ -329,14 +333,48 @@ namespace Presensi
 
         private void btnUbahPresensi_Click(object sender, EventArgs e)
         {
+            try
+            {
+                int selectedPresensiId = GetSelectedPresensiId();
 
+                if (selectedPresensiId != -1)
+                {
+                    conn.Open();
+
+                    MySqlCommand updatePresensiCmd = new MySqlCommand("UPDATE presensi SET waktu_presensi = @waktu_presensi WHERE id_presensi = @id_presensi", conn);
+                    updatePresensiCmd.Parameters.AddWithValue("@waktu_presensi", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")); // Update with your desired logic for updating time
+                    updatePresensiCmd.Parameters.AddWithValue("@id_presensi", selectedPresensiId);
+
+                    updatePresensiCmd.ExecuteNonQuery();
+
+                    conn.Close();
+
+                    MessageBox.Show("Presensi berhasil diubah.");
+                    LoadDataPresensi(); 
+                }
+                else
+                {
+                    MessageBox.Show("Pilih presensi terlebih dahulu.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error mengubah presensi: " + ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
         }
 
         private void btnHapusPresensi_Click(object sender, EventArgs e)
         {
             try
             {
-                int selectedPresensiId = GetSelectedPresensiId(); // Anda perlu mengimplementasikan metode ini
+                int selectedPresensiId = GetSelectedPresensiId();
 
                 if (selectedPresensiId != -1)
                 {
@@ -350,7 +388,7 @@ namespace Presensi
                     conn.Close();
 
                     MessageBox.Show("Presensi berhasil dihapus.");
-                    LoadDataPresensi(); // Refresh data presensi setelah penghapusan
+                    LoadDataPresensi(); 
                 }
                 else
                 {
@@ -382,33 +420,26 @@ namespace Presensi
             formLogin.Show();
             this.Hide();
         }
-
+        //JADWAL
         private void btnTambahJadwal_Click(object sender, EventArgs e)
         {
             try
             {
-                conn.Open();
-
-                int selectedKaryawanId = GetSelectedKaryawanId();
-
-                if (selectedKaryawanId != -1)
+                if (conn.State != ConnectionState.Open)
                 {
-                    MySqlCommand tambahJadwalCmd = new MySqlCommand("INSERT INTO jadwal (tanggal, jam_masuk, jam_selesai, keterangan, id_karyawan) VALUES (@tanggal, @jam_masuk, @jam_selesai, @keterangan, @id_karyawan)", conn);
-                    tambahJadwalCmd.Parameters.AddWithValue("@tanggal", dateTimePickerTanggal.Value.ToString("yyyy-MM-dd"));
-                    tambahJadwalCmd.Parameters.AddWithValue("@jam_masuk", dateTimePickerJamMasuk.Value.ToString("HH:mm:ss"));
-                    tambahJadwalCmd.Parameters.AddWithValue("@jam_selesai", dateTimePickerJamSelesai.Value.ToString("HH:mm:ss"));
-                    tambahJadwalCmd.Parameters.AddWithValue("@keterangan", txtKeterangan.Text);
-                    tambahJadwalCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
-
-                    tambahJadwalCmd.ExecuteNonQuery();
-
-                    MessageBox.Show("Jadwal acara berhasil ditambahkan");
-                    LoadDataJadwal();
+                    conn.Open();
                 }
-                else
-                {
-                    MessageBox.Show("Pilih karyawan terlebih dahulu");
-                }
+
+                MySqlCommand tambahJadwalCmd = new MySqlCommand("INSERT INTO jadwal (tanggal, jam_masuk, jam_selesai, keterangan) VALUES (@tanggal, @jam_masuk, @jam_selesai, @keterangan)", conn);
+                tambahJadwalCmd.Parameters.AddWithValue("@tanggal", dateTimePickerTanggal.Value.ToString("yyyy-MM-dd"));
+                tambahJadwalCmd.Parameters.AddWithValue("@jam_masuk", txtJamMasuk.Text);
+                tambahJadwalCmd.Parameters.AddWithValue("@jam_selesai", txtJamSelesai.Text);
+                tambahJadwalCmd.Parameters.AddWithValue("@keterangan", txtKeterangan.Text);
+
+                tambahJadwalCmd.ExecuteNonQuery();
+
+                MessageBox.Show("Jadwal acara berhasil ditambahkan");
+                LoadDataJadwal();
             }
             catch (Exception ex)
             {
@@ -422,20 +453,18 @@ namespace Presensi
                 }
             }
         }
-
         private void btnUbahJadwal_Click(object sender, EventArgs e)
         {
             try
             {
                 conn.Open();
 
-                MySqlCommand updateJadwalCmd = new MySqlCommand("UPDATE jadwal SET tanggal = @tanggal, jam_masuk = @jam_masuk, jam_selesai = @jam_selesai, keterangan = @keterangan, id_karyawan = @id_karyawan WHERE id_jadwal = @id_jadwal", conn);
+                MySqlCommand updateJadwalCmd = new MySqlCommand("UPDATE jadwal SET tanggal = @tanggal, jam_masuk = @jam_masuk, jam_selesai = @jam_selesai, keterangan = @keterangan WHERE id_jadwal = @id_jadwal", conn);
                 updateJadwalCmd.Parameters.AddWithValue("@tanggal", dateTimePickerTanggal.Value.ToString("yyyy-MM-dd"));
-                updateJadwalCmd.Parameters.AddWithValue("@jam_masuk", dateTimePickerJamMasuk.Value.ToString("HH:mm:ss"));
-                updateJadwalCmd.Parameters.AddWithValue("@jam_selesai", dateTimePickerJamSelesai.Value.ToString("HH:mm:ss"));
+                updateJadwalCmd.Parameters.AddWithValue("@jam_masuk", txtJamMasuk);
+                updateJadwalCmd.Parameters.AddWithValue("@jam_selesai", txtJamSelesai);
                 updateJadwalCmd.Parameters.AddWithValue("@keterangan", txtKeterangan.Text);
-                updateJadwalCmd.Parameters.AddWithValue("@id_karyawan", GetSelectedKaryawanId()); // You need to implement this method
-                updateJadwalCmd.Parameters.AddWithValue("@id_jadwal", GetSelectedJadwalId()); // You need to implement this method
+                updateJadwalCmd.Parameters.AddWithValue("@id_jadwal", GetSelectedJadwalId());
 
                 updateJadwalCmd.ExecuteNonQuery();
 
@@ -448,13 +477,7 @@ namespace Presensi
             {
                 MessageBox.Show("Error mengubah jadwal acara: " + ex.Message);
             }
-            finally
-            {
-                if (conn.State == ConnectionState.Open)
-                {
-                    conn.Close();
-                }
-            }
+            conn.Close();
         }
 
         private void btnHapusJadwal_Click(object sender, EventArgs e)
@@ -463,7 +486,7 @@ namespace Presensi
             {
                 conn.Open();
 
-                int selectedJadwalId = GetSelectedJadwalId(); // You need to implement this method
+                int selectedJadwalId = GetSelectedJadwalId();
 
                 if (selectedJadwalId != -1)
                 {
@@ -484,13 +507,7 @@ namespace Presensi
             {
                 MessageBox.Show("Error menghapus jadwal acara: " + ex.Message);
             }
-            finally
-            {
-                if (conn.State == ConnectionState.Open)
-                {
-                    conn.Close();
-                }
-            }
+            conn.Close();
         }
         private int GetSelectedJadwalId()
         {
@@ -504,5 +521,69 @@ namespace Presensi
                 return -1;
             }
         }
+        private void btnCetak_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Display a SaveFileDialog to choose the location to save the CSV file
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+                saveFileDialog.Title = "Save CSV File";
+                saveFileDialog.ShowDialog();
+
+                if (saveFileDialog.FileName != "")
+                {
+                    // Open a StreamWriter to write data to the chosen CSV file
+                    using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
+                    {
+                        // Write header row for each DataGridView
+                        WriteCsvHeader(dataGridViewKaryawan, sw);
+                        WriteCsvHeader(dataGridViewPresensi, sw);
+                        WriteCsvHeader(dataGridViewJadwal, sw);
+
+                        // Write data rows for each DataGridView
+                        WriteCsvData(dataGridViewKaryawan, sw);
+                        WriteCsvData(dataGridViewPresensi, sw);
+                        WriteCsvData(dataGridViewJadwal, sw);
+                    }
+
+                    MessageBox.Show("CSV file successfully saved.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error exporting to CSV: " + ex.Message);
+            }
+        }
+        private void WriteCsvHeader(DataGridView dataGridView, StreamWriter sw)
+        {
+            // Write header row
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                sw.Write(column.HeaderText + ",");
+            }
+            sw.WriteLine();
+        }
+        private void WriteCsvData(DataGridView dataGridView, StreamWriter sw)
+        {
+            // Write data rows
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    // Check for null values before accessing cell.Value
+                    if (cell.Value != null)
+                    {
+                        sw.Write(cell.Value.ToString() + ",");
+                    }
+                    else
+                    {
+                        sw.Write(",");
+                    }
+                }
+                sw.WriteLine();
+            }
+        }
+
     }
 }
