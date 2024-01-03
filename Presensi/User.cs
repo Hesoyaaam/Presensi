@@ -17,7 +17,12 @@ namespace Presensi
         public User()
         {
             InitializeComponent();
+            LoadData();
+        }
+        private void LoadData()
+        {
             LoadDataPresensi();
+            LoadDataJadwal();
         }
         private void LoadDataPresensi()
         {
@@ -25,18 +30,39 @@ namespace Presensi
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, presensi.waktu_presensi FROM presensi JOIN karyawan ON presensi.id_karyawan = karyawan.id_karyawan", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, jadwal.acara, presensi.keterangan " +
+                                                    "FROM presensi " +
+                                                    "LEFT JOIN karyawan ON presensi.id_karyawan = karyawan.id_karyawan " +
+                                                    "LEFT JOIN jadwal ON presensi.id_jadwal = jadwal.id_jadwal", conn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataTable presensiDataTable = new DataTable();
                 adapter.Fill(presensiDataTable);
 
-                dataGridViewPresensi.DataSource = presensiDataTable;
-
                 conn.Close();
+                dataGridViewPresensi.DataSource = presensiDataTable;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading attendance data: " + ex.Message);
+            }
+        }
+        private void LoadDataJadwal()
+        {
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("SELECT id_jadwal, acara, tanggal, keterangan FROM jadwal", conn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                DataTable jadwalDataTable = new DataTable();
+                adapter.Fill(jadwalDataTable);
+
+                conn.Close();
+                dataGridViewJadwal.DataSource = jadwalDataTable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading event data: " + ex.Message);
             }
         }
         private void User_Load(object sender, EventArgs e)

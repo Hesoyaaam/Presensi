@@ -28,78 +28,67 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnKeluar = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.dataGridViewJadwal = new System.Windows.Forms.DataGridView();
             this.dataGridViewPresensi = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dataGridViewKaryawan = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJadwal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPresensi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewKaryawan)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnKeluar
+            // label1
             // 
-            this.btnKeluar.Location = new System.Drawing.Point(713, 415);
-            this.btnKeluar.Name = "btnKeluar";
-            this.btnKeluar.Size = new System.Drawing.Size(75, 23);
-            this.btnKeluar.TabIndex = 8;
-            this.btnKeluar.Text = "Keluar";
-            this.btnKeluar.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 213);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 16);
+            this.label1.TabIndex = 83;
+            this.label1.Text = "Presensi";
             // 
-            // label5
+            // label11
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 193);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(92, 16);
-            this.label5.TabIndex = 34;
-            this.label5.Text = "Data Presensi";
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(50, 16);
+            this.label11.TabIndex = 82;
+            this.label11.Text = "Jadwal";
+            // 
+            // dataGridViewJadwal
+            // 
+            this.dataGridViewJadwal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewJadwal.Location = new System.Drawing.Point(12, 28);
+            this.dataGridViewJadwal.Name = "dataGridViewJadwal";
+            this.dataGridViewJadwal.RowHeadersWidth = 51;
+            this.dataGridViewJadwal.RowTemplate.Height = 24;
+            this.dataGridViewJadwal.Size = new System.Drawing.Size(472, 162);
+            this.dataGridViewJadwal.TabIndex = 81;
             // 
             // dataGridViewPresensi
             // 
             this.dataGridViewPresensi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewPresensi.Location = new System.Drawing.Point(12, 212);
+            this.dataGridViewPresensi.Location = new System.Drawing.Point(12, 232);
             this.dataGridViewPresensi.Name = "dataGridViewPresensi";
             this.dataGridViewPresensi.RowHeadersWidth = 51;
             this.dataGridViewPresensi.RowTemplate.Height = 24;
-            this.dataGridViewPresensi.Size = new System.Drawing.Size(483, 226);
-            this.dataGridViewPresensi.TabIndex = 30;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 16);
-            this.label4.TabIndex = 36;
-            this.label4.Text = "Data Karyawan";
-            // 
-            // dataGridViewKaryawan
-            // 
-            this.dataGridViewKaryawan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewKaryawan.Location = new System.Drawing.Point(12, 37);
-            this.dataGridViewKaryawan.Name = "dataGridViewKaryawan";
-            this.dataGridViewKaryawan.RowHeadersWidth = 51;
-            this.dataGridViewKaryawan.RowTemplate.Height = 24;
-            this.dataGridViewKaryawan.Size = new System.Drawing.Size(473, 153);
-            this.dataGridViewKaryawan.TabIndex = 35;
+            this.dataGridViewPresensi.Size = new System.Drawing.Size(734, 162);
+            this.dataGridViewPresensi.TabIndex = 80;
             // 
             // User
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightCoral;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(794, 450);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.dataGridViewKaryawan);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.dataGridViewJadwal);
             this.Controls.Add(this.dataGridViewPresensi);
-            this.Controls.Add(this.btnKeluar);
             this.Name = "User";
             this.Text = "User";
             this.Load += new System.EventHandler(this.User_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJadwal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPresensi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewKaryawan)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -107,10 +96,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnKeluar;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.DataGridView dataGridViewJadwal;
         private System.Windows.Forms.DataGridView dataGridViewPresensi;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView dataGridViewKaryawan;
     }
 }

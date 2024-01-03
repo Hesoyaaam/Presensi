@@ -48,19 +48,22 @@
             this.btnUbahJadwal = new System.Windows.Forms.Button();
             this.btnTambahJadwal = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.dateTimePickerTanggal = new System.Windows.Forms.DateTimePicker();
-            this.txtJamMasuk = new System.Windows.Forms.TextBox();
-            this.txtJamSelesai = new System.Windows.Forms.TextBox();
-            this.txtKeterangan = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.btnCetak = new System.Windows.Forms.Button();
+            this.txtAcara = new System.Windows.Forms.TextBox();
+            this.txtKeterangan = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.ComboBoxPresensiKaryawan = new System.Windows.Forms.ComboBox();
+            this.ComboBoxStatus = new System.Windows.Forms.ComboBox();
+            this.ComboBoxNamaAcara = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewKaryawan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPresensi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJadwal)).BeginInit();
@@ -119,16 +122,16 @@
             // dataGridViewPresensi
             // 
             this.dataGridViewPresensi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewPresensi.Location = new System.Drawing.Point(662, 64);
+            this.dataGridViewPresensi.Location = new System.Drawing.Point(687, 233);
             this.dataGridViewPresensi.Name = "dataGridViewPresensi";
             this.dataGridViewPresensi.RowHeadersWidth = 51;
             this.dataGridViewPresensi.RowTemplate.Height = 24;
-            this.dataGridViewPresensi.Size = new System.Drawing.Size(472, 153);
+            this.dataGridViewPresensi.Size = new System.Drawing.Size(472, 162);
             this.dataGridViewPresensi.TabIndex = 19;
             // 
             // btnHapusPresensi
             // 
-            this.btnHapusPresensi.Location = new System.Drawing.Point(824, 223);
+            this.btnHapusPresensi.Location = new System.Drawing.Point(844, 401);
             this.btnHapusPresensi.Name = "btnHapusPresensi";
             this.btnHapusPresensi.Size = new System.Drawing.Size(75, 23);
             this.btnHapusPresensi.TabIndex = 22;
@@ -138,7 +141,7 @@
             // 
             // btnUbahPresensi
             // 
-            this.btnUbahPresensi.Location = new System.Drawing.Point(743, 223);
+            this.btnUbahPresensi.Location = new System.Drawing.Point(763, 401);
             this.btnUbahPresensi.Name = "btnUbahPresensi";
             this.btnUbahPresensi.Size = new System.Drawing.Size(75, 23);
             this.btnUbahPresensi.TabIndex = 21;
@@ -148,7 +151,7 @@
             // 
             // btnTambahPresensi
             // 
-            this.btnTambahPresensi.Location = new System.Drawing.Point(662, 223);
+            this.btnTambahPresensi.Location = new System.Drawing.Point(682, 401);
             this.btnTambahPresensi.Name = "btnTambahPresensi";
             this.btnTambahPresensi.Size = new System.Drawing.Size(75, 23);
             this.btnTambahPresensi.TabIndex = 20;
@@ -168,11 +171,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(659, 45);
+            this.label5.Location = new System.Drawing.Point(684, 64);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(92, 16);
+            this.label5.Size = new System.Drawing.Size(106, 16);
             this.label5.TabIndex = 24;
-            this.label5.Text = "Data Presensi";
+            this.label5.Text = "Nama Karyawan";
             // 
             // txtNamaKaryawan
             // 
@@ -209,7 +212,7 @@
             this.dataGridViewJadwal.Name = "dataGridViewJadwal";
             this.dataGridViewJadwal.RowHeadersWidth = 51;
             this.dataGridViewJadwal.RowTemplate.Height = 24;
-            this.dataGridViewJadwal.Size = new System.Drawing.Size(958, 162);
+            this.dataGridViewJadwal.Size = new System.Drawing.Size(472, 162);
             this.dataGridViewJadwal.TabIndex = 33;
             // 
             // btnHapusJadwal
@@ -245,34 +248,16 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(16, 267);
+            this.label7.Location = new System.Drawing.Point(9, 335);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(58, 16);
             this.label7.TabIndex = 41;
             this.label7.Text = "Tanggal";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(16, 319);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(76, 16);
-            this.label8.TabIndex = 42;
-            this.label8.Text = "Jam Masuk";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 366);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(74, 16);
-            this.label9.TabIndex = 43;
-            this.label9.Text = "Jam Keluar";
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(18, 410);
+            this.label10.Location = new System.Drawing.Point(9, 379);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(76, 16);
             this.label10.TabIndex = 44;
@@ -280,31 +265,10 @@
             // 
             // dateTimePickerTanggal
             // 
-            this.dateTimePickerTanggal.Location = new System.Drawing.Point(9, 289);
+            this.dateTimePickerTanggal.Location = new System.Drawing.Point(9, 354);
             this.dateTimePickerTanggal.Name = "dateTimePickerTanggal";
             this.dateTimePickerTanggal.Size = new System.Drawing.Size(168, 22);
             this.dateTimePickerTanggal.TabIndex = 45;
-            // 
-            // txtJamMasuk
-            // 
-            this.txtJamMasuk.Location = new System.Drawing.Point(9, 339);
-            this.txtJamMasuk.Name = "txtJamMasuk";
-            this.txtJamMasuk.Size = new System.Drawing.Size(168, 22);
-            this.txtJamMasuk.TabIndex = 46;
-            // 
-            // txtJamSelesai
-            // 
-            this.txtJamSelesai.Location = new System.Drawing.Point(9, 385);
-            this.txtJamSelesai.Name = "txtJamSelesai";
-            this.txtJamSelesai.Size = new System.Drawing.Size(168, 22);
-            this.txtJamSelesai.TabIndex = 47;
-            // 
-            // txtKeterangan
-            // 
-            this.txtKeterangan.Location = new System.Drawing.Point(9, 429);
-            this.txtKeterangan.Name = "txtKeterangan";
-            this.txtKeterangan.Size = new System.Drawing.Size(168, 22);
-            this.txtKeterangan.TabIndex = 48;
             // 
             // label1
             // 
@@ -353,7 +317,7 @@
             // 
             // btnCetak
             // 
-            this.btnCetak.Location = new System.Drawing.Point(1067, 457);
+            this.btnCetak.Location = new System.Drawing.Point(1084, 401);
             this.btnCetak.Name = "btnCetak";
             this.btnCetak.Size = new System.Drawing.Size(75, 23);
             this.btnCetak.TabIndex = 54;
@@ -361,26 +325,94 @@
             this.btnCetak.UseVisualStyleBackColor = true;
             this.btnCetak.Click += new System.EventHandler(this.btnCetak_Click);
             // 
+            // txtAcara
+            // 
+            this.txtAcara.Location = new System.Drawing.Point(9, 308);
+            this.txtAcara.Name = "txtAcara";
+            this.txtAcara.Size = new System.Drawing.Size(168, 22);
+            this.txtAcara.TabIndex = 55;
+            // 
+            // txtKeterangan
+            // 
+            this.txtKeterangan.Location = new System.Drawing.Point(9, 398);
+            this.txtKeterangan.Name = "txtKeterangan";
+            this.txtKeterangan.Size = new System.Drawing.Size(168, 22);
+            this.txtKeterangan.TabIndex = 56;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 289);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(43, 16);
+            this.label8.TabIndex = 57;
+            this.label8.Text = "Acara";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(684, 114);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(44, 16);
+            this.label9.TabIndex = 60;
+            this.label9.Text = "Status";
+            // 
+            // ComboBoxPresensiKaryawan
+            // 
+            this.ComboBoxPresensiKaryawan.FormattingEnabled = true;
+            this.ComboBoxPresensiKaryawan.Location = new System.Drawing.Point(687, 89);
+            this.ComboBoxPresensiKaryawan.Name = "ComboBoxPresensiKaryawan";
+            this.ComboBoxPresensiKaryawan.Size = new System.Drawing.Size(168, 24);
+            this.ComboBoxPresensiKaryawan.TabIndex = 61;
+            // 
+            // ComboBoxStatus
+            // 
+            this.ComboBoxStatus.FormattingEnabled = true;
+            this.ComboBoxStatus.Location = new System.Drawing.Point(687, 133);
+            this.ComboBoxStatus.Name = "ComboBoxStatus";
+            this.ComboBoxStatus.Size = new System.Drawing.Size(168, 24);
+            this.ComboBoxStatus.TabIndex = 62;
+            // 
+            // ComboBoxNamaAcara
+            // 
+            this.ComboBoxNamaAcara.FormattingEnabled = true;
+            this.ComboBoxNamaAcara.Location = new System.Drawing.Point(688, 179);
+            this.ComboBoxNamaAcara.Name = "ComboBoxNamaAcara";
+            this.ComboBoxNamaAcara.Size = new System.Drawing.Size(168, 24);
+            this.ComboBoxNamaAcara.TabIndex = 63;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(685, 160);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(43, 16);
+            this.label12.TabIndex = 64;
+            this.label12.Text = "Acara";
+            // 
             // Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Salmon;
+            this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1221, 504);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.ComboBoxNamaAcara);
+            this.Controls.Add(this.ComboBoxStatus);
+            this.Controls.Add(this.ComboBoxPresensiKaryawan);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtKeterangan);
+            this.Controls.Add(this.txtAcara);
             this.Controls.Add(this.btnCetak);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtKeterangan);
-            this.Controls.Add(this.txtJamSelesai);
-            this.Controls.Add(this.txtJamMasuk);
             this.Controls.Add(this.dateTimePickerTanggal);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnHapusJadwal);
             this.Controls.Add(this.btnUbahJadwal);
@@ -433,18 +465,21 @@
         private System.Windows.Forms.Button btnUbahJadwal;
         private System.Windows.Forms.Button btnTambahJadwal;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DateTimePicker dateTimePickerTanggal;
-        private System.Windows.Forms.TextBox txtJamMasuk;
-        private System.Windows.Forms.TextBox txtJamSelesai;
-        private System.Windows.Forms.TextBox txtKeterangan;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnCetak;
+        private System.Windows.Forms.TextBox txtAcara;
+        private System.Windows.Forms.TextBox txtKeterangan;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox ComboBoxPresensiKaryawan;
+        private System.Windows.Forms.ComboBox ComboBoxStatus;
+        private System.Windows.Forms.ComboBox ComboBoxNamaAcara;
+        private System.Windows.Forms.Label label12;
     }
 }

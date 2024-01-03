@@ -17,52 +17,29 @@ namespace Presensi
         public Operator()
         {
             InitializeComponent();
-            LoadDataKaryawan(); 
-            LoadDataPresensi();
-            LoadDataJadwal();
+            LoadData();
+            LoadComboBoxData();
+            LoadComboBoxStatusData();
+            LoadComboBoxNamaAcara();
         }
-        private void LoadDataKaryawan()
+        private void LoadComboBoxData()
         {
             try
             {
                 conn.Open();
 
-                // Select only necessary columns from 'karyawan'
-                MySqlCommand cmd = new MySqlCommand("SELECT id_karyawan, nama_karyawan, jabatan FROM karyawan", conn);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                DataTable karyawanDataTable = new DataTable();
-                adapter.Fill(karyawanDataTable);
-
-                // Add columns for username and password
-                karyawanDataTable.Columns.Add("username", typeof(string));
-                karyawanDataTable.Columns.Add("password", typeof(string));
-
-                foreach (DataRow row in karyawanDataTable.Rows)
+                MySqlCommand cmd = new MySqlCommand("SELECT nama_karyawan FROM karyawan", conn);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    int karyawanId = Convert.ToInt32(row["id_karyawan"]);
-
-                    // Select username and password from 'login'
-                    MySqlCommand loginCmd = new MySqlCommand("SELECT username, password FROM login WHERE id_karyawan = @id_karyawan", conn);
-                    loginCmd.Parameters.AddWithValue("@id_karyawan", karyawanId);
-
-                    using (MySqlDataReader reader = loginCmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        if (reader.Read())
-                        {
-                            row["username"] = reader["username"].ToString();
-                            row["password"] = reader["password"].ToString();
-                        }
+                        ComboBoxPresensiKaryawan.Items.Add(reader["nama_karyawan"].ToString());
                     }
                 }
-
-                // Bind DataGridView to DataTable
-                dataGridViewKaryawan.DataSource = karyawanDataTable;
-
-                conn.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error retrieving data from the 'karyawan' table: " + ex.Message);
+                MessageBox.Show("Error loading employee names: " + ex.Message);
             }
             finally
             {
@@ -72,20 +49,53 @@ namespace Presensi
                 }
             }
         }
+        private void LoadComboBoxStatusData()
+        {
+            ComboBoxStatus.Items.AddRange(new string[] { "Hadir", "Tidak Hadir", "Sakit", "Cuti" });
+        }
+        private void LoadComboBoxNamaAcara()
+        {
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("SELECT acara FROM jadwal", conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string namaAcara = reader["acara"].ToString();
+                    ComboBoxNamaAcara.Items.Add(namaAcara);
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading event names: " + ex.Message);
+            }
+        }
+        private void LoadData()
+        {
+            LoadDataPresensi();
+            LoadDataJadwal();
+        }
         private void LoadDataPresensi()
         {
             try
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, presensi.waktu_presensi FROM presensi JOIN karyawan ON presensi.id_karyawan = karyawan.id_karyawan", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, jadwal.acara, presensi.keterangan " +
+                                                    "FROM presensi " +
+                                                    "LEFT JOIN karyawan ON presensi.id_karyawan = karyawan.id_karyawan " +
+                                                    "LEFT JOIN jadwal ON presensi.id_jadwal = jadwal.id_jadwal", conn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataTable presensiDataTable = new DataTable();
                 adapter.Fill(presensiDataTable);
 
-                dataGridViewPresensi.DataSource = presensiDataTable;
-
                 conn.Close();
+                dataGridViewPresensi.DataSource = presensiDataTable;
             }
             catch (Exception ex)
             {
@@ -98,20 +108,91 @@ namespace Presensi
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT id_jadwal, tanggal, jam_masuk, jam_selesai, keterangan, id_karyawan FROM jadwal", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT id_jadwal, acara, tanggal, keterangan FROM jadwal", conn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataTable jadwalDataTable = new DataTable();
                 adapter.Fill(jadwalDataTable);
 
-                // Add additional logic if needed
-
-                dataGridViewPresensi.DataSource = jadwalDataTable;
-
                 conn.Close();
+                dataGridViewJadwal.DataSource = jadwalDataTable;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading event data: " + ex.Message);
+            }
+        }
+        private void btnTambahPresensi_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                conn.Open();
+
+                using (MySqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string selectedKaryawanNama = ComboBoxPresensiKaryawan.SelectedItem?.ToString();
+                        string status = ComboBoxStatus.SelectedItem?.ToString();
+                        string selectedAcara = ComboBoxNamaAcara.SelectedItem?.ToString(); // Menambahkan pemilihan acara
+
+                        if (!string.IsNullOrEmpty(selectedKaryawanNama) && !string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(selectedAcara))
+                        {
+                            // Check if the selected employee's name exists in the 'karyawan' table
+                            MySqlCommand checkKaryawanCmd = new MySqlCommand("SELECT id_karyawan FROM karyawan WHERE nama_karyawan = @nama_karyawan", conn, transaction);
+                            checkKaryawanCmd.Parameters.AddWithValue("@nama_karyawan", selectedKaryawanNama);
+
+                            object result = checkKaryawanCmd.ExecuteScalar();
+
+                            if (result != null)
+                            {
+                                int selectedKaryawanId = Convert.ToInt32(result);
+
+                                // Check if the selected event name exists in the 'jadwal' table
+                                MySqlCommand checkEventCmd = new MySqlCommand("SELECT id_jadwal FROM jadwal WHERE acara = @acara", conn, transaction);
+                                checkEventCmd.Parameters.AddWithValue("@acara", selectedAcara);
+
+                                result = checkEventCmd.ExecuteScalar();
+
+                                if (result != null)
+                                {
+                                    int selectedJadwalId = Convert.ToInt32(result);
+
+                                    // Insert attendance record into the 'presensi' table
+                                    MySqlCommand tambahPresensiCmd = new MySqlCommand("INSERT INTO presensi (id_karyawan, id_jadwal, keterangan) VALUES (@id_karyawan, @id_jadwal, @keterangan)", conn, transaction);
+                                    tambahPresensiCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
+                                    tambahPresensiCmd.Parameters.AddWithValue("@id_jadwal", selectedJadwalId);
+                                    tambahPresensiCmd.Parameters.AddWithValue("@keterangan", status);
+                                    tambahPresensiCmd.ExecuteNonQuery();
+
+                                    transaction.Commit();
+
+                                    MessageBox.Show("Presensi berhasil ditambahkan");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Nama acara tidak ditemukan");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Nama karyawan tidak ditemukan");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Pilih karyawan, status presensi, dan acara terlebih dahulu");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding attendance: " + ex.Message);
             }
             finally
             {
@@ -119,13 +200,179 @@ namespace Presensi
                 {
                     conn.Close();
                 }
+                LoadDataPresensi();
+            }
+        }
+        private void btnUbahPresensi_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                conn.Open();
+
+                using (MySqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        int selectedPresensiId = GetSelectedPresensiId();
+
+                        if (selectedPresensiId != -1)
+                        {
+                            string selectedKaryawanNama = ComboBoxPresensiKaryawan.SelectedItem?.ToString();
+                            string status = ComboBoxStatus.SelectedItem?.ToString();
+                            string selectedAcara = ComboBoxNamaAcara.SelectedItem?.ToString(); // Menambahkan pemilihan acara
+
+                            if (!string.IsNullOrEmpty(selectedKaryawanNama) && !string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(selectedAcara))
+                            {
+                                // Check if the selected employee's name exists in the 'karyawan' table
+                                MySqlCommand checkKaryawanCmd = new MySqlCommand("SELECT id_karyawan FROM karyawan WHERE nama_karyawan = @nama_karyawan", conn, transaction);
+                                checkKaryawanCmd.Parameters.AddWithValue("@nama_karyawan", selectedKaryawanNama);
+
+                                object result = checkKaryawanCmd.ExecuteScalar();
+
+                                if (result != null)
+                                {
+                                    int selectedKaryawanId = Convert.ToInt32(result);
+
+                                    // Check if the selected event name exists in the 'jadwal' table
+                                    MySqlCommand checkEventCmd = new MySqlCommand("SELECT id_jadwal FROM jadwal WHERE acara = @acara", conn, transaction);
+                                    checkEventCmd.Parameters.AddWithValue("@acara", selectedAcara);
+
+                                    result = checkEventCmd.ExecuteScalar();
+
+                                    if (result != null)
+                                    {
+                                        int selectedJadwalId = Convert.ToInt32(result);
+
+                                        // Update the selected attendance record in the 'presensi' table
+                                        MySqlCommand updatePresensiCmd = new MySqlCommand("UPDATE presensi SET id_karyawan = @id_karyawan, id_jadwal = @id_jadwal, keterangan = @keterangan WHERE id_presensi = @id_presensi", conn, transaction);
+                                        updatePresensiCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
+                                        updatePresensiCmd.Parameters.AddWithValue("@id_jadwal", selectedJadwalId);
+                                        updatePresensiCmd.Parameters.AddWithValue("@keterangan", status);
+                                        updatePresensiCmd.Parameters.AddWithValue("@id_presensi", selectedPresensiId);
+                                        updatePresensiCmd.ExecuteNonQuery();
+
+                                        transaction.Commit();
+
+                                        MessageBox.Show("Presensi berhasil diubah");
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Nama acara tidak ditemukan");
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Nama karyawan tidak ditemukan");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Pilih karyawan, status presensi, dan acara terlebih dahulu");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Pilih presensi terlebih dahulu");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error updating attendance: " + ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+                LoadDataPresensi();
+            }
+        }
+        private void btnHapusPresensi_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                conn.Open();
+
+                using (MySqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        int selectedPresensiId = GetSelectedPresensiId(); // Get the selected attendance ID
+
+                        if (selectedPresensiId != -1)
+                        {
+                            // Delete the selected attendance record from the 'presensi' table
+                            MySqlCommand deletePresensiCmd = new MySqlCommand("DELETE FROM presensi WHERE id_presensi = @id_presensi", conn, transaction);
+                            deletePresensiCmd.Parameters.AddWithValue("@id_presensi", selectedPresensiId);
+                            deletePresensiCmd.ExecuteNonQuery();
+
+                            transaction.Commit();
+
+                            MessageBox.Show("Presensi berhasil dihapus");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Pilih presensi terlebih dahulu");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting attendance: " + ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+                LoadDataPresensi();
+            }
+        }
+        private int GetSelectedPresensiId()
+        {
+            if (dataGridViewPresensi.SelectedRows.Count > 0)
+            {
+                return Convert.ToInt32(dataGridViewPresensi.SelectedRows[0].Cells["id_presensi"].Value);
+            }
+            else
+            {
+                MessageBox.Show("Pilih baris presensi terlebih dahulu.");
+                return -1;
             }
         }
         private void Operator_Load(object sender, EventArgs e)
         {
 
         }
+        private void ComboBoxPresensiKaryawan_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
+
+        private void ComboBoxStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBoxNamaAcara_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
         private void btnKeluar_Click(object sender, EventArgs e)
         {
             Form1 formLogin = new Form1();
