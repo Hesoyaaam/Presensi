@@ -99,3 +99,11 @@ C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\bin\D
 C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\bin\Debug\MySql.Data.xml
 C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\bin\Debug\MySqlConnector.xml
 C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\bin\Debug\System.IO.Pipelines.xml
+C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\obj\Debug\Presensi.jadwal_operator.resources
+C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\obj\Debug\Presensi.karyawan_operator.resources
+C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\obj\Debug\Presensi.presensi_operator.resources
+C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\obj\Debug\Presensi.admin.jadwal_admin.resources
+C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\obj\Debug\Presensi.admin.karyawan_admin.resources
+C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\obj\Debug\Presensi.admin.presensi_admin.resources
+C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\obj\Debug\Presensi.user.jadwal_user.resources
+C:\AJI\SEMESTER 5\Paltform Dekstop dan Embedded\Presensi\Presensi\Presensi\obj\Debug\Presensi.user.presensi_user.resources

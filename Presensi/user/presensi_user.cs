@@ -9,21 +9,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Presensi
+namespace Presensi.user
 {
-    public partial class User : Form
+    public partial class presensi_user : Form
     {
-        MySqlConnection conn = new MySqlConnection("Server=127.0.0.1;Database=presensi;User Id=your_username;Password=your_password;");
-        public User()
+        readonly MySqlConnection conn = new MySqlConnection("Server=127.0.0.1;Database=presensi;User Id=your_username;Password=your_password;");
+
+        public presensi_user()
         {
             InitializeComponent();
-            LoadData();
-        }
-        private void LoadData()
-        {
             LoadDataPresensi();
-            LoadDataJadwal();
         }
+
         private void LoadDataPresensi()
         {
             try
@@ -39,33 +36,18 @@ namespace Presensi
                 adapter.Fill(presensiDataTable);
 
                 conn.Close();
-                dataGridViewPresensi.DataSource = presensiDataTable;
+                if(dataGridViewPresensi != null)
+                {
+                    dataGridViewPresensi.DataSource = presensiDataTable;
+                }
+               
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading attendance data: " + ex.Message);
             }
         }
-        private void LoadDataJadwal()
-        {
-            try
-            {
-                conn.Open();
-
-                MySqlCommand cmd = new MySqlCommand("SELECT id_jadwal, acara, tanggal, keterangan FROM jadwal", conn);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                DataTable jadwalDataTable = new DataTable();
-                adapter.Fill(jadwalDataTable);
-
-                conn.Close();
-                dataGridViewJadwal.DataSource = jadwalDataTable;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading event data: " + ex.Message);
-            }
-        }
-        private void User_Load(object sender, EventArgs e)
+        private void presensi_user_Load(object sender, EventArgs e)
         {
 
         }
