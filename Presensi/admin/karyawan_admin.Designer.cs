@@ -46,94 +46,98 @@
             // 
             // btnHapusKaryawan
             // 
-            this.btnHapusKaryawan.Location = new System.Drawing.Point(333, 94);
+            this.btnHapusKaryawan.Location = new System.Drawing.Point(320, 135);
             this.btnHapusKaryawan.Name = "btnHapusKaryawan";
             this.btnHapusKaryawan.Size = new System.Drawing.Size(75, 23);
             this.btnHapusKaryawan.TabIndex = 81;
-            this.btnHapusKaryawan.Text = "Hapus";
+            this.btnHapusKaryawan.Text = "DELETE";
             this.btnHapusKaryawan.UseVisualStyleBackColor = true;
             this.btnHapusKaryawan.Click += new System.EventHandler(this.btnHapusKaryawan_Click);
             // 
             // btnUbahKaryawan
             // 
-            this.btnUbahKaryawan.Location = new System.Drawing.Point(333, 53);
+            this.btnUbahKaryawan.Location = new System.Drawing.Point(320, 89);
             this.btnUbahKaryawan.Name = "btnUbahKaryawan";
             this.btnUbahKaryawan.Size = new System.Drawing.Size(75, 23);
             this.btnUbahKaryawan.TabIndex = 80;
-            this.btnUbahKaryawan.Text = "Ubah";
+            this.btnUbahKaryawan.Text = "EDIT";
             this.btnUbahKaryawan.UseVisualStyleBackColor = true;
             this.btnUbahKaryawan.Click += new System.EventHandler(this.btnUbahKaryawan_Click);
             // 
             // btnTambahKaryawan
             // 
-            this.btnTambahKaryawan.Location = new System.Drawing.Point(333, 12);
+            this.btnTambahKaryawan.Location = new System.Drawing.Point(320, 42);
             this.btnTambahKaryawan.Name = "btnTambahKaryawan";
             this.btnTambahKaryawan.Size = new System.Drawing.Size(75, 23);
             this.btnTambahKaryawan.TabIndex = 79;
-            this.btnTambahKaryawan.Text = "Tambah";
+            this.btnTambahKaryawan.Text = "ADD";
             this.btnTambahKaryawan.UseVisualStyleBackColor = true;
             this.btnTambahKaryawan.Click += new System.EventHandler(this.btnTambahKaryawan_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 92);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(16, 97);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 16);
+            this.label6.Size = new System.Drawing.Size(78, 16);
             this.label6.TabIndex = 78;
             this.label6.Text = "Username";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 138);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(16, 135);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 16);
+            this.label3.Size = new System.Drawing.Size(75, 16);
             this.label3.TabIndex = 77;
             this.label3.Text = "Password";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(16, 53);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 16);
+            this.label2.Size = new System.Drawing.Size(63, 16);
             this.label2.TabIndex = 76;
-            this.label2.Text = "Jabatan";
+            this.label2.Text = "Position";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(16, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 16);
+            this.label1.Size = new System.Drawing.Size(48, 16);
             this.label1.TabIndex = 75;
-            this.label1.Text = "Nama Karyawan";
+            this.label1.Text = "Name";
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(139, 138);
+            this.txtPassword.Location = new System.Drawing.Point(118, 136);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(168, 22);
             this.txtPassword.TabIndex = 74;
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(139, 94);
+            this.txtUsername.Location = new System.Drawing.Point(118, 94);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(168, 22);
             this.txtUsername.TabIndex = 73;
             // 
             // txtJabatan
             // 
-            this.txtJabatan.Location = new System.Drawing.Point(139, 53);
+            this.txtJabatan.Location = new System.Drawing.Point(118, 53);
             this.txtJabatan.Name = "txtJabatan";
             this.txtJabatan.Size = new System.Drawing.Size(168, 22);
             this.txtJabatan.TabIndex = 72;
             // 
             // txtNamaKaryawan
             // 
-            this.txtNamaKaryawan.Location = new System.Drawing.Point(139, 12);
+            this.txtNamaKaryawan.Location = new System.Drawing.Point(118, 12);
             this.txtNamaKaryawan.Name = "txtNamaKaryawan";
             this.txtNamaKaryawan.Size = new System.Drawing.Size(168, 22);
             this.txtNamaKaryawan.TabIndex = 71;
@@ -150,11 +154,11 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(333, 131);
+            this.btnExport.Location = new System.Drawing.Point(422, 135);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
             this.btnExport.TabIndex = 82;
-            this.btnExport.Text = "Export";
+            this.btnExport.Text = "EXPORT";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
@@ -178,6 +182,7 @@
             this.Controls.Add(this.dataGridViewKaryawan);
             this.Name = "karyawan_admin";
             this.Text = "karyawan_admin";
+            this.Load += new System.EventHandler(this.karyawan_admin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewKaryawan)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

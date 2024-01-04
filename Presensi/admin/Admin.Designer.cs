@@ -40,42 +40,46 @@
             // btnKeluar
             // 
             this.btnKeluar.BackColor = System.Drawing.Color.White;
+            this.btnKeluar.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnKeluar.Location = new System.Drawing.Point(-2, 451);
             this.btnKeluar.Name = "btnKeluar";
             this.btnKeluar.Size = new System.Drawing.Size(130, 30);
             this.btnKeluar.TabIndex = 6;
-            this.btnKeluar.Text = "Keluar";
+            this.btnKeluar.Text = "LOG OUT";
             this.btnKeluar.UseVisualStyleBackColor = false;
             this.btnKeluar.Click += new System.EventHandler(this.btnKeluar_Click);
             // 
             // btnShowKaryawan
             // 
+            this.btnShowKaryawan.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShowKaryawan.Location = new System.Drawing.Point(0, 170);
             this.btnShowKaryawan.Name = "btnShowKaryawan";
             this.btnShowKaryawan.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnShowKaryawan.Size = new System.Drawing.Size(130, 30);
             this.btnShowKaryawan.TabIndex = 65;
-            this.btnShowKaryawan.Text = "KARYAWAN";
+            this.btnShowKaryawan.Text = "EMPLOYEE";
             this.btnShowKaryawan.UseVisualStyleBackColor = true;
             this.btnShowKaryawan.Click += new System.EventHandler(this.btnShowKaryawan_Click);
             // 
             // btnShowJadwal
             // 
+            this.btnShowJadwal.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShowJadwal.Location = new System.Drawing.Point(0, 220);
             this.btnShowJadwal.Name = "btnShowJadwal";
             this.btnShowJadwal.Size = new System.Drawing.Size(130, 30);
             this.btnShowJadwal.TabIndex = 66;
-            this.btnShowJadwal.Text = "JADWAL";
+            this.btnShowJadwal.Text = "SCHEDULE";
             this.btnShowJadwal.UseVisualStyleBackColor = true;
             this.btnShowJadwal.Click += new System.EventHandler(this.btnShowJadwal_Click);
             // 
             // btnPresensi
             // 
+            this.btnPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPresensi.Location = new System.Drawing.Point(0, 270);
             this.btnPresensi.Name = "btnPresensi";
             this.btnPresensi.Size = new System.Drawing.Size(130, 30);
             this.btnPresensi.TabIndex = 67;
-            this.btnPresensi.Text = "PRESENSI";
+            this.btnPresensi.Text = "ATTENDANCE";
             this.btnPresensi.UseVisualStyleBackColor = true;
             this.btnPresensi.Click += new System.EventHandler(this.btnPresensi_Click);
             // 
@@ -84,7 +88,7 @@
             this.panelDashboard.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panelDashboard.Location = new System.Drawing.Point(130, 0);
             this.panelDashboard.Name = "panelDashboard";
-            this.panelDashboard.Size = new System.Drawing.Size(774, 507);
+            this.panelDashboard.Size = new System.Drawing.Size(769, 503);
             this.panelDashboard.TabIndex = 68;
             // 
             // pictureBox1

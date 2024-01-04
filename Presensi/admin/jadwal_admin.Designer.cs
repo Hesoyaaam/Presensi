@@ -45,29 +45,30 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 47);
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(20, 40);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(43, 16);
+            this.label8.Size = new System.Drawing.Size(48, 16);
             this.label8.TabIndex = 77;
             this.label8.Text = "Acara";
             // 
             // txtKeterangan
             // 
-            this.txtKeterangan.Location = new System.Drawing.Point(87, 137);
+            this.txtKeterangan.Location = new System.Drawing.Point(109, 137);
             this.txtKeterangan.Name = "txtKeterangan";
             this.txtKeterangan.Size = new System.Drawing.Size(168, 22);
             this.txtKeterangan.TabIndex = 76;
             // 
             // txtAcara
             // 
-            this.txtAcara.Location = new System.Drawing.Point(87, 48);
+            this.txtAcara.Location = new System.Drawing.Point(109, 40);
             this.txtAcara.Name = "txtAcara";
             this.txtAcara.Size = new System.Drawing.Size(168, 22);
             this.txtAcara.TabIndex = 75;
             // 
             // dateTimePickerTanggal
             // 
-            this.dateTimePickerTanggal.Location = new System.Drawing.Point(87, 95);
+            this.dateTimePickerTanggal.Location = new System.Drawing.Point(109, 89);
             this.dateTimePickerTanggal.Name = "dateTimePickerTanggal";
             this.dateTimePickerTanggal.Size = new System.Drawing.Size(168, 22);
             this.dateTimePickerTanggal.TabIndex = 74;
@@ -75,48 +76,50 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(9, 137);
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(20, 137);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(76, 16);
+            this.label10.Size = new System.Drawing.Size(83, 16);
             this.label10.TabIndex = 73;
-            this.label10.Text = "Keterangan";
+            this.label10.Text = "Information";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 95);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(20, 88);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 16);
+            this.label7.Size = new System.Drawing.Size(40, 16);
             this.label7.TabIndex = 72;
-            this.label7.Text = "Tanggal";
+            this.label7.Text = "Date";
             // 
             // btnHapusJadwal
             // 
-            this.btnHapusJadwal.Location = new System.Drawing.Point(277, 105);
+            this.btnHapusJadwal.Location = new System.Drawing.Point(320, 134);
             this.btnHapusJadwal.Name = "btnHapusJadwal";
             this.btnHapusJadwal.Size = new System.Drawing.Size(75, 23);
             this.btnHapusJadwal.TabIndex = 71;
-            this.btnHapusJadwal.Text = "Hapus";
+            this.btnHapusJadwal.Text = "DELETE";
             this.btnHapusJadwal.UseVisualStyleBackColor = true;
             this.btnHapusJadwal.Click += new System.EventHandler(this.btnHapusJadwal_Click);
             // 
             // btnUbahJadwal
             // 
-            this.btnUbahJadwal.Location = new System.Drawing.Point(277, 76);
+            this.btnUbahJadwal.Location = new System.Drawing.Point(320, 88);
             this.btnUbahJadwal.Name = "btnUbahJadwal";
             this.btnUbahJadwal.Size = new System.Drawing.Size(75, 23);
             this.btnUbahJadwal.TabIndex = 70;
-            this.btnUbahJadwal.Text = "Ubah";
+            this.btnUbahJadwal.Text = "EDIT";
             this.btnUbahJadwal.UseVisualStyleBackColor = true;
             this.btnUbahJadwal.Click += new System.EventHandler(this.btnUbahJadwal_Click);
             // 
             // btnTambahJadwal
             // 
-            this.btnTambahJadwal.Location = new System.Drawing.Point(277, 47);
+            this.btnTambahJadwal.Location = new System.Drawing.Point(320, 42);
             this.btnTambahJadwal.Name = "btnTambahJadwal";
             this.btnTambahJadwal.Size = new System.Drawing.Size(75, 23);
             this.btnTambahJadwal.TabIndex = 69;
-            this.btnTambahJadwal.Text = "Tambah";
+            this.btnTambahJadwal.Text = "ADD";
             this.btnTambahJadwal.UseVisualStyleBackColor = true;
             this.btnTambahJadwal.Click += new System.EventHandler(this.btnTambahJadwal_Click);
             // 
@@ -132,11 +135,11 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(277, 134);
+            this.btnExport.Location = new System.Drawing.Point(421, 134);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
             this.btnExport.TabIndex = 78;
-            this.btnExport.Text = "Export";
+            this.btnExport.Text = "EXPORT";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
@@ -158,6 +161,7 @@
             this.Controls.Add(this.dataGridViewJadwal);
             this.Name = "jadwal_admin";
             this.Text = "jadwal_admin";
+            this.Load += new System.EventHandler(this.jadwal_admin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJadwal)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

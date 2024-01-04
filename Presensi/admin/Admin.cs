@@ -27,6 +27,17 @@ namespace Presensi
             jadwal_admin = new jadwal_admin();
             presensi_admin = new presensi_admin();
             ShowDashboard(karyawan_admin);
+
+            karyawan_admin.KaryawanDataChanged += KaryawanDataChangedHandler;
+            jadwal_admin.JadwalDataChanged += JadwalDataChangedHandler;
+        }
+        private void KaryawanDataChangedHandler(object sender, EventArgs e)
+        {
+            presensi_admin.LoadComboBoxNamaKaryawan();
+        }
+        private void JadwalDataChangedHandler(object sender, EventArgs e)
+        {
+            presensi_admin.LoadComboBoxNamaAcara();
         }
         private void ShowDashboard(Form dashboard)
         {
@@ -36,7 +47,6 @@ namespace Presensi
             panelDashboard.Controls.Clear(); 
             panelDashboard.Controls.Add(dashboard);
             dashboard.Show();
-
         }
 
         private void btnKeluar_Click(object sender, EventArgs e)

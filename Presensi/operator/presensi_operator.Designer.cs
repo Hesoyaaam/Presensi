@@ -44,11 +44,12 @@
             // label12
             // 
             this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(13, 116);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(43, 16);
+            this.label12.Size = new System.Drawing.Size(46, 16);
             this.label12.TabIndex = 75;
-            this.label12.Text = "Acara";
+            this.label12.Text = "Event";
             // 
             // ComboBoxNamaAcara
             // 
@@ -77,48 +78,53 @@
             // label9
             // 
             this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(12, 70);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(44, 16);
+            this.label9.Size = new System.Drawing.Size(50, 16);
             this.label9.TabIndex = 71;
             this.label9.Text = "Status";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(12, 21);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(106, 16);
+            this.label5.Size = new System.Drawing.Size(48, 16);
             this.label5.TabIndex = 69;
-            this.label5.Text = "Nama Karyawan";
+            this.label5.Text = "Name";
             // 
             // btnHapusPresensi
             // 
+            this.btnHapusPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHapusPresensi.Location = new System.Drawing.Point(331, 117);
             this.btnHapusPresensi.Name = "btnHapusPresensi";
             this.btnHapusPresensi.Size = new System.Drawing.Size(75, 23);
             this.btnHapusPresensi.TabIndex = 68;
-            this.btnHapusPresensi.Text = "Hapus";
+            this.btnHapusPresensi.Text = "DELETE";
             this.btnHapusPresensi.UseVisualStyleBackColor = true;
             this.btnHapusPresensi.Click += new System.EventHandler(this.btnHapusPresensi_Click);
             // 
             // btnUbahPresensi
             // 
+            this.btnUbahPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUbahPresensi.Location = new System.Drawing.Point(331, 71);
             this.btnUbahPresensi.Name = "btnUbahPresensi";
             this.btnUbahPresensi.Size = new System.Drawing.Size(75, 23);
             this.btnUbahPresensi.TabIndex = 67;
-            this.btnUbahPresensi.Text = "Ubah";
+            this.btnUbahPresensi.Text = "EDIT";
             this.btnUbahPresensi.UseVisualStyleBackColor = true;
             this.btnUbahPresensi.Click += new System.EventHandler(this.btnUbahPresensi_Click);
             // 
             // btnTambahPresensi
             // 
+            this.btnTambahPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTambahPresensi.Location = new System.Drawing.Point(331, 22);
             this.btnTambahPresensi.Name = "btnTambahPresensi";
             this.btnTambahPresensi.Size = new System.Drawing.Size(75, 23);
             this.btnTambahPresensi.TabIndex = 66;
-            this.btnTambahPresensi.Text = "Tambah";
+            this.btnTambahPresensi.Text = "ADD";
             this.btnTambahPresensi.UseVisualStyleBackColor = true;
             this.btnTambahPresensi.Click += new System.EventHandler(this.btnTambahPresensi_Click);
             // 
@@ -129,7 +135,7 @@
             this.dataGridViewPresensi.Name = "dataGridViewPresensi";
             this.dataGridViewPresensi.RowHeadersWidth = 51;
             this.dataGridViewPresensi.RowTemplate.Height = 24;
-            this.dataGridViewPresensi.Size = new System.Drawing.Size(803, 282);
+            this.dataGridViewPresensi.Size = new System.Drawing.Size(801, 275);
             this.dataGridViewPresensi.TabIndex = 65;
             // 
             // presensi_operator

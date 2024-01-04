@@ -14,7 +14,6 @@ namespace Presensi
     public partial class presensi_operator : Form
     {
         readonly MySqlConnection conn = new MySqlConnection("Server=127.0.0.1;Database=presensi;User Id=your_username;Password=your_password;");
-
         public presensi_operator()
         {
             InitializeComponent();
@@ -52,7 +51,7 @@ namespace Presensi
         }
         private void LoadComboBoxStatusData()
         {
-            ComboBoxStatus.Items.AddRange(new string[] { "Hadir", "Tidak Hadir", "Sakit", "Cuti" });
+            ComboBoxStatus.Items.AddRange(new string[] { "Hadir", "Tidak Hadir", "Sakit", "Izin" });
         }
         private void LoadComboBoxNamaAcara()
         {
@@ -84,7 +83,7 @@ namespace Presensi
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, jadwal.acara, presensi.keterangan " +
+                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, jadwal.acara, jadwal.tanggal, presensi.keterangan " +
                                                     "FROM presensi " +
                                                     "LEFT JOIN karyawan ON presensi.id_karyawan = karyawan.id_karyawan " +
                                                     "LEFT JOIN jadwal ON presensi.id_jadwal = jadwal.id_jadwal", conn);
@@ -112,7 +111,7 @@ namespace Presensi
                     {
                         string selectedKaryawanNama = ComboBoxPresensiKaryawan.SelectedItem?.ToString();
                         string status = ComboBoxStatus.SelectedItem?.ToString();
-                        string selectedAcara = ComboBoxNamaAcara.SelectedItem?.ToString(); // Menambahkan pemilihan acara
+                        string selectedAcara = ComboBoxNamaAcara.SelectedItem?.ToString();
 
                         if (!string.IsNullOrEmpty(selectedKaryawanNama) && !string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(selectedAcara))
                         {
@@ -126,7 +125,6 @@ namespace Presensi
                             {
                                 int selectedKaryawanId = Convert.ToInt32(result);
 
-                                // Check if the selected event name exists in the 'jadwal' table
                                 MySqlCommand checkEventCmd = new MySqlCommand("SELECT id_jadwal FROM jadwal WHERE acara = @acara", conn, transaction);
                                 checkEventCmd.Parameters.AddWithValue("@acara", selectedAcara);
 
@@ -136,7 +134,6 @@ namespace Presensi
                                 {
                                     int selectedJadwalId = Convert.ToInt32(result);
 
-                                    // Insert attendance record into the 'presensi' table
                                     MySqlCommand tambahPresensiCmd = new MySqlCommand("INSERT INTO presensi (id_karyawan, id_jadwal, keterangan) VALUES (@id_karyawan, @id_jadwal, @keterangan)", conn, transaction);
                                     tambahPresensiCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
                                     tambahPresensiCmd.Parameters.AddWithValue("@id_jadwal", selectedJadwalId);
@@ -145,21 +142,21 @@ namespace Presensi
 
                                     transaction.Commit();
 
-                                    MessageBox.Show("Presensi berhasil ditambahkan");
+                                    MessageBox.Show("Presence added successfully");
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Nama acara tidak ditemukan");
+                                    MessageBox.Show("Event name not found");
                                 }
                             }
                             else
                             {
-                                MessageBox.Show("Nama karyawan tidak ditemukan");
+                                MessageBox.Show("Employee name not found");
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Pilih karyawan, status presensi, dan acara terlebih dahulu");
+                            MessageBox.Show("Select employees, attendance status, and events first");
                         }
                     }
                     catch (Exception ex)
@@ -192,17 +189,16 @@ namespace Presensi
                 {
                     try
                     {
-                        int selectedPresensiId = GetSelectedPresensiId(); // Get the selected attendance ID
+                        int selectedPresensiId = GetSelectedPresensiId();
 
                         if (selectedPresensiId != -1)
                         {
                             string selectedKaryawanNama = ComboBoxPresensiKaryawan.SelectedItem?.ToString();
                             string status = ComboBoxStatus.SelectedItem?.ToString();
-                            string selectedAcara = ComboBoxNamaAcara.SelectedItem?.ToString(); // Menambahkan pemilihan acara
+                            string selectedAcara = ComboBoxNamaAcara.SelectedItem?.ToString(); 
 
                             if (!string.IsNullOrEmpty(selectedKaryawanNama) && !string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(selectedAcara))
                             {
-                                // Check if the selected employee's name exists in the 'karyawan' table
                                 MySqlCommand checkKaryawanCmd = new MySqlCommand("SELECT id_karyawan FROM karyawan WHERE nama_karyawan = @nama_karyawan", conn, transaction);
                                 checkKaryawanCmd.Parameters.AddWithValue("@nama_karyawan", selectedKaryawanNama);
 
@@ -211,8 +207,6 @@ namespace Presensi
                                 if (result != null)
                                 {
                                     int selectedKaryawanId = Convert.ToInt32(result);
-
-                                    // Check if the selected event name exists in the 'jadwal' table
                                     MySqlCommand checkEventCmd = new MySqlCommand("SELECT id_jadwal FROM jadwal WHERE acara = @acara", conn, transaction);
                                     checkEventCmd.Parameters.AddWithValue("@acara", selectedAcara);
 
@@ -221,8 +215,6 @@ namespace Presensi
                                     if (result != null)
                                     {
                                         int selectedJadwalId = Convert.ToInt32(result);
-
-                                        // Update the selected attendance record in the 'presensi' table
                                         MySqlCommand updatePresensiCmd = new MySqlCommand("UPDATE presensi SET id_karyawan = @id_karyawan, id_jadwal = @id_jadwal, keterangan = @keterangan WHERE id_presensi = @id_presensi", conn, transaction);
                                         updatePresensiCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
                                         updatePresensiCmd.Parameters.AddWithValue("@id_jadwal", selectedJadwalId);
@@ -232,26 +224,26 @@ namespace Presensi
 
                                         transaction.Commit();
 
-                                        MessageBox.Show("Presensi berhasil diubah");
+                                        MessageBox.Show("Presence changed successfully");
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Nama acara tidak ditemukan");
+                                        MessageBox.Show("Event name not found");
                                     }
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Nama karyawan tidak ditemukan");
+                                    MessageBox.Show("Employee name not found");
                                 }
                             }
                             else
                             {
-                                MessageBox.Show("Pilih karyawan, status presensi, dan acara terlebih dahulu");
+                                MessageBox.Show("Select employees, attendance status, and events first");
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Pilih presensi terlebih dahulu");
+                            MessageBox.Show("Select presence first");
                         }
                     }
                     catch (Exception ex)
@@ -285,22 +277,21 @@ namespace Presensi
                 {
                     try
                     {
-                        int selectedPresensiId = GetSelectedPresensiId(); // Get the selected attendance ID
+                        int selectedPresensiId = GetSelectedPresensiId(); 
 
                         if (selectedPresensiId != -1)
                         {
-                            // Delete the selected attendance record from the 'presensi' table
                             MySqlCommand deletePresensiCmd = new MySqlCommand("DELETE FROM presensi WHERE id_presensi = @id_presensi", conn, transaction);
                             deletePresensiCmd.Parameters.AddWithValue("@id_presensi", selectedPresensiId);
                             deletePresensiCmd.ExecuteNonQuery();
 
                             transaction.Commit();
 
-                            MessageBox.Show("Presensi berhasil dihapus");
+                            MessageBox.Show("Presence successfully deleted");
                         }
                         else
                         {
-                            MessageBox.Show("Pilih presensi terlebih dahulu");
+                            MessageBox.Show("Select presence first");
                         }
                     }
                     catch (Exception ex)
@@ -331,7 +322,7 @@ namespace Presensi
             }
             else
             {
-                MessageBox.Show("Pilih baris presensi terlebih dahulu.");
+                MessageBox.Show("Select the presence row first.");
                 return -1;
             }
         }

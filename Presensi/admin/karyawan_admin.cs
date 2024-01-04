@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,44 +16,12 @@ namespace Presensi.admin
     {
         readonly MySqlConnection conn = new MySqlConnection("Server=127.0.0.1;Database=presensi;User Id=your_username;Password=your_password;");
         private ComboBox ComboBoxPresensiKaryawan;
+        public event EventHandler KaryawanDataChanged;
         public karyawan_admin()
         {
             InitializeComponent();
             LoadDataKaryawan();
-            LoadComboBoxNamaKaryawan();
 
-        }
-        private void LoadComboBoxNamaKaryawan()
-        {
-            if (ComboBoxPresensiKaryawan != null)
-            {
-                ComboBoxPresensiKaryawan.Items.Clear();
-
-                try
-                {
-                    conn.Open();
-
-                    MySqlCommand cmd = new MySqlCommand("SELECT nama_karyawan FROM karyawan", conn);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            ComboBoxPresensiKaryawan.Items.Add(reader["nama_karyawan"].ToString());
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading employee names: " + ex.Message);
-                }
-                finally
-                {
-                    if (conn.State == ConnectionState.Open)
-                    {
-                        conn.Close();
-                    }
-                }
-            }
         }
         private void LoadDataKaryawan()
         {
@@ -85,6 +54,7 @@ namespace Presensi.admin
                 }
                 conn.Close();
                 dataGridViewKaryawan.DataSource = karyawanDataTable;
+                KaryawanDataChanged?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -118,10 +88,9 @@ namespace Presensi.admin
                         insertLoginCmd.ExecuteNonQuery();
 
                         transaction.Commit();
-
+                        MessageBox.Show("Employee data added successfully");
                         conn.Close();
                         LoadDataKaryawan();
-                        LoadComboBoxNamaKaryawan();
                     }
                     catch (Exception ex)
                     {
@@ -155,14 +124,12 @@ namespace Presensi.admin
 
                         if (selectedKaryawanId != -1)
                         {
-                            // Update employee data in the 'karyawan' table
                             MySqlCommand updateKaryawanCmd = new MySqlCommand("UPDATE karyawan SET nama_karyawan = @nama, jabatan = @jabatan WHERE id_karyawan = @id", conn, transaction);
                             updateKaryawanCmd.Parameters.AddWithValue("@nama", txtNamaKaryawan.Text);
                             updateKaryawanCmd.Parameters.AddWithValue("@jabatan", txtJabatan.Text);
                             updateKaryawanCmd.Parameters.AddWithValue("@id", selectedKaryawanId);
                             updateKaryawanCmd.ExecuteNonQuery();
 
-                            // Update login data in the 'login' table
                             MySqlCommand updateLoginCmd = new MySqlCommand("UPDATE login SET username = @username, password = @password, `level` = @level WHERE id_karyawan = @id_karyawan", conn, transaction);
                             updateLoginCmd.Parameters.AddWithValue("@username", txtUsername.Text);
                             updateLoginCmd.Parameters.AddWithValue("@password", txtPassword.Text);
@@ -171,7 +138,9 @@ namespace Presensi.admin
                             updateLoginCmd.ExecuteNonQuery();
 
                             transaction.Commit();
+                            MessageBox.Show("Employee data has been successfully changed");
                             conn.Close();
+
                         }
                     }
                     catch (Exception ex)
@@ -192,7 +161,6 @@ namespace Presensi.admin
                     conn.Close();
                 }
                 LoadDataKaryawan();
-                LoadComboBoxNamaKaryawan();
             }
         }
 
@@ -219,9 +187,9 @@ namespace Presensi.admin
                             deleteKaryawanCmd.ExecuteNonQuery();
 
                             transaction.Commit();
+                            MessageBox.Show("Employee data has been successfully deleted");
                             conn.Close();
                             LoadDataKaryawan();
-                            LoadComboBoxNamaKaryawan();
                         }
                     }
                     catch (Exception ex)
@@ -273,6 +241,45 @@ namespace Presensi.admin
         }
 
         private void btnExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "CSV files (*.csv)|*.csv",
+                    Title = "Export Data to CSV",
+                    FileName = "karyawan_export.csv"
+                };
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+                    StringBuilder csvContent = new StringBuilder();
+                    foreach (DataGridViewColumn column in dataGridViewKaryawan.Columns)
+                    {
+                        csvContent.Append(column.HeaderText + ",");
+                    }
+                    csvContent.AppendLine();
+                    foreach (DataGridViewRow row in dataGridViewKaryawan.Rows)
+                    {
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            csvContent.Append(cell.Value + ",");
+                        }
+                        csvContent.AppendLine();
+                    }
+                    File.WriteAllText(filePath, csvContent.ToString());
+
+                    MessageBox.Show("Data exported successfully to: " + filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error exporting data: " + ex.Message);
+            }
+        }
+
+        private void karyawan_admin_Load(object sender, EventArgs e)
         {
 
         }

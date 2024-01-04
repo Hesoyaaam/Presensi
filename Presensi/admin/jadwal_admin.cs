@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +15,13 @@ namespace Presensi.admin
     public partial class jadwal_admin : Form
     {
         readonly MySqlConnection conn = new MySqlConnection("Server=127.0.0.1;Database=presensi;User Id=your_username;Password=your_password;");
+        public event EventHandler JadwalDataChanged;
         public jadwal_admin()
         {
             InitializeComponent();
             LoadDataJadwal();
         }
+
         private void LoadDataJadwal()
         {
             try
@@ -32,6 +35,7 @@ namespace Presensi.admin
 
                 conn.Close();
                 dataGridViewJadwal.DataSource = jadwalDataTable;
+                JadwalDataChanged?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -50,7 +54,7 @@ namespace Presensi.admin
                 tambahJadwalCmd.Parameters.AddWithValue("@keterangan", txtKeterangan.Text);
                 tambahJadwalCmd.ExecuteNonQuery();
 
-                MessageBox.Show("Jadwal acara berhasil ditambahkan");
+                MessageBox.Show("Event schedule added successfully");
 
             }
             catch (Exception ex)
@@ -73,7 +77,7 @@ namespace Presensi.admin
                 updateJadwalCmd.Parameters.AddWithValue("@id_jadwal", GetSelectedJadwalId());
                 updateJadwalCmd.ExecuteNonQuery();
 
-                MessageBox.Show("Jadwal acara berhasil diubah");
+                MessageBox.Show("The event schedule has been successfully changed");
             }
             catch (Exception ex)
             {
@@ -98,12 +102,12 @@ namespace Presensi.admin
 
                     hapusJadwalCmd.ExecuteNonQuery();
 
-                    MessageBox.Show("Jadwal acara berhasil dihapus");
+                    MessageBox.Show("The event schedule has been successfully deleted");
 
                 }
                 else
                 {
-                    MessageBox.Show("Pilih jadwal acara terlebih dahulu");
+                    MessageBox.Show("Select the event schedule first");
                 }
             }
             catch (Exception ex)
@@ -121,12 +125,52 @@ namespace Presensi.admin
             }
             else
             {
-                MessageBox.Show("Pilih baris jadwal acara terlebih dahulu");
+                MessageBox.Show("Select the event schedule row first");
                 return -1;
             }
         }
-
         private void btnExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Create a SaveFileDialog to specify the target CSV file
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "CSV files (*.csv)|*.csv",
+                    Title = "Export Data to CSV",
+                    FileName = "jadwal_export.csv"
+                };
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+                    StringBuilder csvContent = new StringBuilder();
+                    foreach (DataGridViewColumn column in dataGridViewJadwal.Columns)
+                    {
+                        csvContent.Append(column.HeaderText + ",");
+                    }
+                    csvContent.AppendLine();
+
+                    foreach (DataGridViewRow row in dataGridViewJadwal.Rows)
+                    {
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            csvContent.Append(cell.Value + ",");
+                        }
+                        csvContent.AppendLine();
+                    }
+                    File.WriteAllText(filePath, csvContent.ToString());
+
+                    MessageBox.Show("Data exported successfully to: " + filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error exporting data: " + ex.Message);
+            }
+        }
+
+        private void jadwal_admin_Load(object sender, EventArgs e)
         {
 
         }

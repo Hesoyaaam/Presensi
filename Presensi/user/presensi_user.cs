@@ -27,7 +27,7 @@ namespace Presensi.user
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, jadwal.acara, presensi.keterangan " +
+                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, jadwal.acara, jadwal.tanggal, presensi.keterangan " +
                                                     "FROM presensi " +
                                                     "LEFT JOIN karyawan ON presensi.id_karyawan = karyawan.id_karyawan " +
                                                     "LEFT JOIN jadwal ON presensi.id_jadwal = jadwal.id_jadwal", conn);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +20,12 @@ namespace Presensi.admin
             InitializeComponent();
             LoadDataPresensi();
             LoadComboBoxNamaKaryawan();
-            LoadComboBoxStatusData();
             LoadComboBoxNamaAcara();
+            LoadComboBoxStatusData();
         }
-        private void LoadComboBoxNamaKaryawan()
+        public void LoadComboBoxNamaKaryawan()
         {
-            ComboBoxPresensiKaryawan.Items.Clear(); 
+            ComboBoxPresensiKaryawan.Items.Clear();
 
             try
             {
@@ -54,10 +55,12 @@ namespace Presensi.admin
 
         private void LoadComboBoxStatusData()
         {
-            ComboBoxStatus.Items.AddRange(new string[] { "Hadir", "Tidak Hadir", "Sakit", "Cuti" });
+            ComboBoxStatus.Items.AddRange(new string[] { "Hadir", "Tidak Hadir", "Sakit", "Izin" });
         }
-        private void LoadComboBoxNamaAcara()
+        public void LoadComboBoxNamaAcara()
         {
+            ComboBoxNamaAcara.Items.Clear();
+
             try
             {
                 conn.Open();
@@ -68,16 +71,19 @@ namespace Presensi.admin
                 while (reader.Read())
                 {
                     string namaAcara = reader["acara"].ToString();
-
-                    // Menambahkan item ke ComboBoxNamaAcara
                     ComboBoxNamaAcara.Items.Add(namaAcara);
                 }
-
-                conn.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading event names: " + ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
             }
         }
         private void LoadDataPresensi()
@@ -86,7 +92,7 @@ namespace Presensi.admin
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, jadwal.acara, presensi.keterangan " +
+                MySqlCommand cmd = new MySqlCommand("SELECT presensi.id_presensi, karyawan.nama_karyawan, jadwal.acara, jadwal.tanggal, presensi.keterangan " +
                                                     "FROM presensi " +
                                                     "LEFT JOIN karyawan ON presensi.id_karyawan = karyawan.id_karyawan " +
                                                     "LEFT JOIN jadwal ON presensi.id_jadwal = jadwal.id_jadwal", conn);
@@ -119,17 +125,14 @@ namespace Presensi.admin
 
                         if (!string.IsNullOrEmpty(selectedKaryawanNama) && !string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(selectedAcara))
                         {
-                            // Mengambil ID karyawan berdasarkan nama
                             MySqlCommand getKaryawanIdCmd = new MySqlCommand("SELECT id_karyawan FROM karyawan WHERE nama_karyawan = @nama_karyawan", conn, transaction);
                             getKaryawanIdCmd.Parameters.AddWithValue("@nama_karyawan", selectedKaryawanNama);
                             int selectedKaryawanId = Convert.ToInt32(getKaryawanIdCmd.ExecuteScalar());
 
-                            // Mengambil ID jadwal berdasarkan acara
                             MySqlCommand getJadwalIdCmd = new MySqlCommand("SELECT id_jadwal FROM jadwal WHERE acara = @acara", conn, transaction);
                             getJadwalIdCmd.Parameters.AddWithValue("@acara", selectedAcara);
                             int selectedJadwalId = Convert.ToInt32(getJadwalIdCmd.ExecuteScalar());
 
-                            // Insert attendance record into the 'presensi' table
                             MySqlCommand tambahPresensiCmd = new MySqlCommand("INSERT INTO presensi (id_karyawan, id_jadwal, keterangan) VALUES (@id_karyawan, @id_jadwal, @keterangan)", conn, transaction);
                             tambahPresensiCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
                             tambahPresensiCmd.Parameters.AddWithValue("@id_jadwal", selectedJadwalId);
@@ -138,11 +141,11 @@ namespace Presensi.admin
 
                             transaction.Commit();
 
-                            MessageBox.Show("Presensi berhasil ditambahkan");
+                            MessageBox.Show("Presence added successfully");
                         }
                         else
                         {
-                            MessageBox.Show("Pilih karyawan, status presensi, dan acara terlebih dahulu");
+                            MessageBox.Show("Select employees, attendance status, and events first");
                         }
                     }
                     catch (Exception ex)
@@ -162,7 +165,6 @@ namespace Presensi.admin
                 {
                     conn.Close();
                 }
-                // Refresh data setelah tambah presensi
                 LoadDataPresensi();
             }
         }
@@ -187,17 +189,14 @@ namespace Presensi.admin
 
                             if (!string.IsNullOrEmpty(selectedKaryawanNama) && !string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(selectedAcara))
                             {
-                                // Mengambil ID karyawan berdasarkan nama
                                 MySqlCommand getKaryawanIdCmd = new MySqlCommand("SELECT id_karyawan FROM karyawan WHERE nama_karyawan = @nama_karyawan", conn, transaction);
                                 getKaryawanIdCmd.Parameters.AddWithValue("@nama_karyawan", selectedKaryawanNama);
                                 int selectedKaryawanId = Convert.ToInt32(getKaryawanIdCmd.ExecuteScalar());
 
-                                // Mengambil ID jadwal berdasarkan acara
                                 MySqlCommand getJadwalIdCmd = new MySqlCommand("SELECT id_jadwal FROM jadwal WHERE acara = @acara", conn, transaction);
                                 getJadwalIdCmd.Parameters.AddWithValue("@acara", selectedAcara);
                                 int selectedJadwalId = Convert.ToInt32(getJadwalIdCmd.ExecuteScalar());
 
-                                // Update the selected attendance record in the 'presensi' table
                                 MySqlCommand updatePresensiCmd = new MySqlCommand("UPDATE presensi SET id_karyawan = @id_karyawan, id_jadwal = @id_jadwal, keterangan = @keterangan WHERE id_presensi = @id_presensi", conn, transaction);
                                 updatePresensiCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
                                 updatePresensiCmd.Parameters.AddWithValue("@id_jadwal", selectedJadwalId);
@@ -207,16 +206,16 @@ namespace Presensi.admin
 
                                 transaction.Commit();
 
-                                MessageBox.Show("Presensi berhasil diubah");
+                                MessageBox.Show("Presence changed successfully");
                             }
                             else
                             {
-                                MessageBox.Show("Pilih karyawan, status presensi, dan acara terlebih dahulu");
+                                MessageBox.Show("Select employees, attendance status, and events first");
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Pilih presensi terlebih dahulu");
+                            MessageBox.Show("Select presence first");
                         }
                     }
                     catch (Exception ex)
@@ -236,11 +235,9 @@ namespace Presensi.admin
                 {
                     conn.Close();
                 }
-                // Refresh data setelah ubah presensi
                 LoadDataPresensi();
             }
         }
-
         private void btnHapusPresensi_Click(object sender, EventArgs e)
         {
             try
@@ -261,13 +258,11 @@ namespace Presensi.admin
                             deletePresensiCmd.ExecuteNonQuery();
 
                             transaction.Commit();
-
-                            MessageBox.Show("Presensi berhasil dihapus");
-                            LoadComboBoxNamaKaryawan();
+                            MessageBox.Show("Presence successfully deleted");
                         }
                         else
                         {
-                            MessageBox.Show("Pilih presensi terlebih dahulu");
+                            MessageBox.Show("Select presence first");
                         }
                     }
                     catch (Exception ex)
@@ -287,6 +282,7 @@ namespace Presensi.admin
                 {
                     conn.Close();
                 }
+                LoadDataPresensi();
             }
         }
         private int GetSelectedPresensiId()
@@ -301,12 +297,44 @@ namespace Presensi.admin
                 return -1;
             }
         }
-
-        private void btnCetak_Click(object sender, EventArgs e)
+        private void btnExport_Click(object sender, EventArgs e)
         {
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "CSV files (*.csv)|*.csv",
+                    Title = "Export Data to CSV",
+                    FileName = "presensi_export.csv"
+                };
 
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+                    StringBuilder csvContent = new StringBuilder();
+                    foreach (DataGridViewColumn column in dataGridViewPresensi.Columns)
+                    {
+                        csvContent.Append(column.HeaderText + ",");
+                    }
+                    csvContent.AppendLine(); 
+                    foreach (DataGridViewRow row in dataGridViewPresensi.Rows)
+                    {
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            csvContent.Append(cell.Value + ",");
+                        }
+                        csvContent.AppendLine(); 
+                    }
+                    File.WriteAllText(filePath, csvContent.ToString());
+
+                    MessageBox.Show("Data exported successfully to: " + filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error exporting data: " + ex.Message);
+            }
         }
-
         private void presensi_admin_Load(object sender, EventArgs e)
         {
             LoadComboBoxNamaKaryawan();

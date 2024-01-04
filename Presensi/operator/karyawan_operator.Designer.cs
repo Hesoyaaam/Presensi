@@ -36,11 +36,12 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(0, 40);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 16);
+            this.label4.Size = new System.Drawing.Size(133, 16);
             this.label4.TabIndex = 57;
-            this.label4.Text = "Data Karyawan";
+            this.label4.Text = "EMPLOYEE DATA";
             // 
             // dataGridViewKaryawan
             // 
@@ -49,7 +50,7 @@
             this.dataGridViewKaryawan.Name = "dataGridViewKaryawan";
             this.dataGridViewKaryawan.RowHeadersWidth = 51;
             this.dataGridViewKaryawan.RowTemplate.Height = 24;
-            this.dataGridViewKaryawan.Size = new System.Drawing.Size(804, 383);
+            this.dataGridViewKaryawan.Size = new System.Drawing.Size(800, 382);
             this.dataGridViewKaryawan.TabIndex = 56;
             // 
             // karyawan_operator
