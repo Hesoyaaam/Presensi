@@ -30,7 +30,6 @@ namespace Presensi.user
                 DataTable jadwalDataTable = new DataTable();
                 adapter.Fill(jadwalDataTable);
 
-                // Letakkan breakpoint atau pesan log di sini
                 Console.WriteLine("Data Loaded Successfully!");
 
                 conn.Close();

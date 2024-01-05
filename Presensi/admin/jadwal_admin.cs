@@ -133,7 +133,6 @@ namespace Presensi.admin
         {
             try
             {
-                // Create a SaveFileDialog to specify the target CSV file
                 SaveFileDialog saveFileDialog = new SaveFileDialog
                 {
                     Filter = "CSV files (*.csv)|*.csv",
@@ -173,6 +172,13 @@ namespace Presensi.admin
         private void jadwal_admin_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtAcara.Clear();
+            dateTimePickerTanggal.Value = DateTime.Now; 
+            txtKeterangan.Clear();
         }
     }
 }

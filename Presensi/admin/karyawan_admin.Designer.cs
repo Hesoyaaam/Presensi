@@ -41,6 +41,7 @@
             this.txtNamaKaryawan = new System.Windows.Forms.TextBox();
             this.dataGridViewKaryawan = new System.Windows.Forms.DataGridView();
             this.btnExport = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewKaryawan)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,7 +49,7 @@
             // 
             this.btnHapusKaryawan.Location = new System.Drawing.Point(320, 135);
             this.btnHapusKaryawan.Name = "btnHapusKaryawan";
-            this.btnHapusKaryawan.Size = new System.Drawing.Size(75, 23);
+            this.btnHapusKaryawan.Size = new System.Drawing.Size(80, 30);
             this.btnHapusKaryawan.TabIndex = 81;
             this.btnHapusKaryawan.Text = "DELETE";
             this.btnHapusKaryawan.UseVisualStyleBackColor = true;
@@ -58,7 +59,7 @@
             // 
             this.btnUbahKaryawan.Location = new System.Drawing.Point(320, 89);
             this.btnUbahKaryawan.Name = "btnUbahKaryawan";
-            this.btnUbahKaryawan.Size = new System.Drawing.Size(75, 23);
+            this.btnUbahKaryawan.Size = new System.Drawing.Size(80, 30);
             this.btnUbahKaryawan.TabIndex = 80;
             this.btnUbahKaryawan.Text = "EDIT";
             this.btnUbahKaryawan.UseVisualStyleBackColor = true;
@@ -68,7 +69,7 @@
             // 
             this.btnTambahKaryawan.Location = new System.Drawing.Point(320, 42);
             this.btnTambahKaryawan.Name = "btnTambahKaryawan";
-            this.btnTambahKaryawan.Size = new System.Drawing.Size(75, 23);
+            this.btnTambahKaryawan.Size = new System.Drawing.Size(80, 30);
             this.btnTambahKaryawan.TabIndex = 79;
             this.btnTambahKaryawan.Text = "ADD";
             this.btnTambahKaryawan.UseVisualStyleBackColor = true;
@@ -144,6 +145,8 @@
             // 
             // dataGridViewKaryawan
             // 
+            this.dataGridViewKaryawan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridViewKaryawan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewKaryawan.Location = new System.Drawing.Point(0, 170);
             this.dataGridViewKaryawan.Name = "dataGridViewKaryawan";
@@ -154,19 +157,30 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(422, 135);
+            this.btnExport.Location = new System.Drawing.Point(492, 136);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.Size = new System.Drawing.Size(80, 30);
             this.btnExport.TabIndex = 82;
             this.btnExport.Text = "EXPORT";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(406, 135);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(80, 30);
+            this.btnClear.TabIndex = 83;
+            this.btnClear.Text = "CLEAR";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // karyawan_admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnHapusKaryawan);
             this.Controls.Add(this.btnUbahKaryawan);
@@ -204,5 +218,6 @@
         private System.Windows.Forms.TextBox txtNamaKaryawan;
         private System.Windows.Forms.DataGridView dataGridViewKaryawan;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnClear;
     }
 }

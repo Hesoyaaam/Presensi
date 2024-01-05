@@ -65,8 +65,6 @@ namespace Presensi
                 while (reader.Read())
                 {
                     string namaAcara = reader["acara"].ToString();
-
-                    // Menambahkan item ke ComboBoxNamaAcara
                     ComboBoxNamaAcara.Items.Add(namaAcara);
                 }
 
@@ -115,7 +113,6 @@ namespace Presensi
 
                         if (!string.IsNullOrEmpty(selectedKaryawanNama) && !string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(selectedAcara))
                         {
-                            // Check if the selected employee's name exists in the 'karyawan' table
                             MySqlCommand checkKaryawanCmd = new MySqlCommand("SELECT id_karyawan FROM karyawan WHERE nama_karyawan = @nama_karyawan", conn, transaction);
                             checkKaryawanCmd.Parameters.AddWithValue("@nama_karyawan", selectedKaryawanNama);
 
@@ -142,7 +139,7 @@ namespace Presensi
 
                                     transaction.Commit();
 
-                                    MessageBox.Show("Presence added successfully");
+                                    MessageBox.Show("Attendance added successfully");
                                 }
                                 else
                                 {
@@ -224,7 +221,7 @@ namespace Presensi
 
                                         transaction.Commit();
 
-                                        MessageBox.Show("Presence changed successfully");
+                                        MessageBox.Show("Attendance changed successfully");
                                     }
                                     else
                                     {
@@ -243,7 +240,7 @@ namespace Presensi
                         }
                         else
                         {
-                            MessageBox.Show("Select presence first");
+                            MessageBox.Show("Select attendance first");
                         }
                     }
                     catch (Exception ex)
@@ -287,11 +284,11 @@ namespace Presensi
 
                             transaction.Commit();
 
-                            MessageBox.Show("Presence successfully deleted");
+                            MessageBox.Show("Attendance successfully deleted");
                         }
                         else
                         {
-                            MessageBox.Show("Select presence first");
+                            MessageBox.Show("Select attendance first");
                         }
                     }
                     catch (Exception ex)
@@ -322,7 +319,7 @@ namespace Presensi
             }
             else
             {
-                MessageBox.Show("Select the presence row first.");
+                MessageBox.Show("Select the attendance row first.");
                 return -1;
             }
         }
@@ -330,6 +327,13 @@ namespace Presensi
         private void presensi_operator_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ComboBoxPresensiKaryawan.SelectedIndex = -1;
+            ComboBoxStatus.SelectedIndex = -1;
+            ComboBoxNamaAcara.SelectedIndex = -1;
         }
     }
 }

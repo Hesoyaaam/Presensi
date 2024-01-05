@@ -89,9 +89,9 @@
             this.label3.Font = new System.Drawing.Font("Humnst777 Lt BT", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(229, 242);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(231, 20);
+            this.label3.Size = new System.Drawing.Size(195, 20);
             this.label3.TabIndex = 18;
-            this.label3.Text = "welcome back, have a nice day";
+            this.label3.Text = "Welcome, have a nice day";
             // 
             // txtUsername
             // 
@@ -103,6 +103,7 @@
             // 
             // panel1
             // 
+            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel1.Controls.Add(this.btnLogin);
             this.panel1.Controls.Add(this.btnClear);
@@ -162,7 +163,9 @@
             this.ClientSize = new System.Drawing.Size(682, 403);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

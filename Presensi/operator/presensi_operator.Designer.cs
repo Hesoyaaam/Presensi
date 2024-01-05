@@ -38,6 +38,7 @@
             this.btnUbahPresensi = new System.Windows.Forms.Button();
             this.btnTambahPresensi = new System.Windows.Forms.Button();
             this.dataGridViewPresensi = new System.Windows.Forms.DataGridView();
+            this.btnClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPresensi)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,10 +98,10 @@
             // 
             // btnHapusPresensi
             // 
-            this.btnHapusPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHapusPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHapusPresensi.Location = new System.Drawing.Point(331, 117);
             this.btnHapusPresensi.Name = "btnHapusPresensi";
-            this.btnHapusPresensi.Size = new System.Drawing.Size(75, 23);
+            this.btnHapusPresensi.Size = new System.Drawing.Size(80, 30);
             this.btnHapusPresensi.TabIndex = 68;
             this.btnHapusPresensi.Text = "DELETE";
             this.btnHapusPresensi.UseVisualStyleBackColor = true;
@@ -108,10 +109,10 @@
             // 
             // btnUbahPresensi
             // 
-            this.btnUbahPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUbahPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUbahPresensi.Location = new System.Drawing.Point(331, 71);
             this.btnUbahPresensi.Name = "btnUbahPresensi";
-            this.btnUbahPresensi.Size = new System.Drawing.Size(75, 23);
+            this.btnUbahPresensi.Size = new System.Drawing.Size(80, 30);
             this.btnUbahPresensi.TabIndex = 67;
             this.btnUbahPresensi.Text = "EDIT";
             this.btnUbahPresensi.UseVisualStyleBackColor = true;
@@ -119,10 +120,10 @@
             // 
             // btnTambahPresensi
             // 
-            this.btnTambahPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTambahPresensi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTambahPresensi.Location = new System.Drawing.Point(331, 22);
             this.btnTambahPresensi.Name = "btnTambahPresensi";
-            this.btnTambahPresensi.Size = new System.Drawing.Size(75, 23);
+            this.btnTambahPresensi.Size = new System.Drawing.Size(80, 30);
             this.btnTambahPresensi.TabIndex = 66;
             this.btnTambahPresensi.Text = "ADD";
             this.btnTambahPresensi.UseVisualStyleBackColor = true;
@@ -130,6 +131,8 @@
             // 
             // dataGridViewPresensi
             // 
+            this.dataGridViewPresensi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridViewPresensi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewPresensi.Location = new System.Drawing.Point(0, 170);
             this.dataGridViewPresensi.Name = "dataGridViewPresensi";
@@ -138,11 +141,22 @@
             this.dataGridViewPresensi.Size = new System.Drawing.Size(801, 275);
             this.dataGridViewPresensi.TabIndex = 65;
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(426, 117);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(80, 30);
+            this.btnClear.TabIndex = 90;
+            this.btnClear.Text = "CLEAR";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // presensi_operator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.ComboBoxNamaAcara);
             this.Controls.Add(this.ComboBoxStatus);
@@ -174,5 +188,6 @@
         private System.Windows.Forms.Button btnUbahPresensi;
         private System.Windows.Forms.Button btnTambahPresensi;
         private System.Windows.Forms.DataGridView dataGridViewPresensi;
+        private System.Windows.Forms.Button btnClear;
     }
 }

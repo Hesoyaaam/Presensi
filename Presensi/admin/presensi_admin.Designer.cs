@@ -39,6 +39,7 @@
             this.btnTambahPresensi = new System.Windows.Forms.Button();
             this.dataGridViewPresensi = new System.Windows.Forms.DataGridView();
             this.btnExport = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPresensi)).BeginInit();
             this.SuspendLayout();
             // 
@@ -103,7 +104,7 @@
             // 
             this.btnHapusPresensi.Location = new System.Drawing.Point(320, 132);
             this.btnHapusPresensi.Name = "btnHapusPresensi";
-            this.btnHapusPresensi.Size = new System.Drawing.Size(75, 23);
+            this.btnHapusPresensi.Size = new System.Drawing.Size(80, 30);
             this.btnHapusPresensi.TabIndex = 79;
             this.btnHapusPresensi.Text = "DELETE";
             this.btnHapusPresensi.UseVisualStyleBackColor = true;
@@ -113,7 +114,7 @@
             // 
             this.btnUbahPresensi.Location = new System.Drawing.Point(320, 87);
             this.btnUbahPresensi.Name = "btnUbahPresensi";
-            this.btnUbahPresensi.Size = new System.Drawing.Size(75, 23);
+            this.btnUbahPresensi.Size = new System.Drawing.Size(80, 30);
             this.btnUbahPresensi.TabIndex = 78;
             this.btnUbahPresensi.Text = "EDIT";
             this.btnUbahPresensi.UseVisualStyleBackColor = true;
@@ -123,7 +124,7 @@
             // 
             this.btnTambahPresensi.Location = new System.Drawing.Point(320, 42);
             this.btnTambahPresensi.Name = "btnTambahPresensi";
-            this.btnTambahPresensi.Size = new System.Drawing.Size(75, 23);
+            this.btnTambahPresensi.Size = new System.Drawing.Size(80, 30);
             this.btnTambahPresensi.TabIndex = 77;
             this.btnTambahPresensi.Text = "ADD";
             this.btnTambahPresensi.UseVisualStyleBackColor = true;
@@ -131,6 +132,8 @@
             // 
             // dataGridViewPresensi
             // 
+            this.dataGridViewPresensi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridViewPresensi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewPresensi.Location = new System.Drawing.Point(0, 170);
             this.dataGridViewPresensi.Name = "dataGridViewPresensi";
@@ -141,19 +144,30 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(411, 133);
+            this.btnExport.Location = new System.Drawing.Point(492, 128);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.Size = new System.Drawing.Size(80, 30);
             this.btnExport.TabIndex = 88;
             this.btnExport.Text = "EXPORT";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(406, 132);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(80, 30);
+            this.btnClear.TabIndex = 89;
+            this.btnClear.Text = "CLEAR";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // presensi_admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.ComboBoxNamaAcara);
@@ -187,5 +201,6 @@
         private System.Windows.Forms.Button btnTambahPresensi;
         private System.Windows.Forms.DataGridView dataGridViewPresensi;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnClear;
     }
 }

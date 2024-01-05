@@ -206,7 +206,7 @@ namespace Presensi.admin
 
                                 transaction.Commit();
 
-                                MessageBox.Show("Presence changed successfully");
+                                MessageBox.Show("Attendance changed successfully");
                             }
                             else
                             {
@@ -215,7 +215,7 @@ namespace Presensi.admin
                         }
                         else
                         {
-                            MessageBox.Show("Select presence first");
+                            MessageBox.Show("Select Attendance first");
                         }
                     }
                     catch (Exception ex)
@@ -248,21 +248,20 @@ namespace Presensi.admin
                 {
                     try
                     {
-                        int selectedPresensiId = GetSelectedPresensiId(); // Get the selected attendance ID
+                        int selectedPresensiId = GetSelectedPresensiId(); 
 
                         if (selectedPresensiId != -1)
                         {
-                            // Delete the selected attendance record from the 'presensi' table
                             MySqlCommand deletePresensiCmd = new MySqlCommand("DELETE FROM presensi WHERE id_presensi = @id_presensi", conn, transaction);
                             deletePresensiCmd.Parameters.AddWithValue("@id_presensi", selectedPresensiId);
                             deletePresensiCmd.ExecuteNonQuery();
 
                             transaction.Commit();
-                            MessageBox.Show("Presence successfully deleted");
+                            MessageBox.Show("Attendance successfully deleted");
                         }
                         else
                         {
-                            MessageBox.Show("Select presence first");
+                            MessageBox.Show("Select attandence first");
                         }
                     }
                     catch (Exception ex)
@@ -293,7 +292,7 @@ namespace Presensi.admin
             }
             else
             {
-                MessageBox.Show("Pilih baris presensi terlebih dahulu.");
+                MessageBox.Show("Select the attendance row first.");
                 return -1;
             }
         }
@@ -353,6 +352,13 @@ namespace Presensi.admin
         private void ComboBoxNamaAcara_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ComboBoxPresensiKaryawan.SelectedIndex = -1;
+            ComboBoxStatus.SelectedIndex = -1;
+            ComboBoxNamaAcara.SelectedIndex = -1;
         }
     }
 }

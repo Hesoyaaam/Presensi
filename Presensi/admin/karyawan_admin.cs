@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -78,7 +79,7 @@ namespace Presensi.admin
                         int karyawanId = Convert.ToInt32(insertKaryawanCmd.ExecuteScalar());
 
                         string username = txtUsername.Text;
-                        string password = txtPassword.Text;
+                        string password = HashPassword(txtPassword.Text);
 
                         MySqlCommand insertLoginCmd = new MySqlCommand("INSERT INTO login (username, password, `level`, id_karyawan) VALUES (@username, @password, @level, @id_karyawan);", conn, transaction);
                         insertLoginCmd.Parameters.AddWithValue("@username", username);
@@ -132,7 +133,7 @@ namespace Presensi.admin
 
                             MySqlCommand updateLoginCmd = new MySqlCommand("UPDATE login SET username = @username, password = @password, `level` = @level WHERE id_karyawan = @id_karyawan", conn, transaction);
                             updateLoginCmd.Parameters.AddWithValue("@username", txtUsername.Text);
-                            updateLoginCmd.Parameters.AddWithValue("@password", txtPassword.Text);
+                            updateLoginCmd.Parameters.AddWithValue("@password", HashPassword(txtPassword.Text)); 
                             updateLoginCmd.Parameters.AddWithValue("@level", GetLevelFromJabatan(txtJabatan.Text));
                             updateLoginCmd.Parameters.AddWithValue("@id_karyawan", selectedKaryawanId);
                             updateLoginCmd.ExecuteNonQuery();
@@ -163,7 +164,14 @@ namespace Presensi.admin
                 LoadDataKaryawan();
             }
         }
-
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
         private void btnHapusKaryawan_Click(object sender, EventArgs e)
         {
             try
@@ -282,6 +290,14 @@ namespace Presensi.admin
         private void karyawan_admin_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtNamaKaryawan.Clear();
+            txtJabatan.Clear();
+            txtUsername.Clear();
+            txtPassword.Clear();
         }
     }
 }

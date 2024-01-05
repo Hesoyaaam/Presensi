@@ -45,6 +45,8 @@
             // 
             // dataGridViewKaryawan
             // 
+            this.dataGridViewKaryawan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridViewKaryawan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewKaryawan.Location = new System.Drawing.Point(0, 70);
             this.dataGridViewKaryawan.Name = "dataGridViewKaryawan";

@@ -35,6 +35,8 @@
             // 
             // dataGridViewPresensi
             // 
+            this.dataGridViewPresensi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridViewPresensi.ColumnHeadersHeight = 29;
             this.dataGridViewPresensi.Location = new System.Drawing.Point(0, 70);
             this.dataGridViewPresensi.Name = "dataGridViewPresensi";

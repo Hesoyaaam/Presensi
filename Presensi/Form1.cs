@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Security.Cryptography;
 
 namespace Presensi
 {
@@ -24,59 +25,67 @@ namespace Presensi
         private void btnLogin_Click_1(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
-            string password = txtPassword.Text;
+            string password = HashPassword(txtPassword.Text); 
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Username dan Password harus diisi.");
+                MessageBox.Show("Username and Password must be filled in.");
                 return;
             }
+
             try
             {
                 conn.Open();
 
-                string query = "SELECT * FROM login WHERE username = @username AND password = @password";
+                string query = "SELECT * FROM login WHERE username = @username";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@username", username);
-                cmd.Parameters.AddWithValue("@password", password);
 
-                MySqlDataAdapter sda = new MySqlDataAdapter(cmd);
-
-                DataTable dtabel = new DataTable();
-                sda.Fill(dtabel);
-
-                if (dtabel.Rows.Count > 0)
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    string userLevel = dtabel.Rows[0]["level"].ToString();
-
-                    switch (userLevel.ToLower())
+                    if (reader.Read())
                     {
-                        case "admin":
-                            Admin adminForm = new Admin();
-                            adminForm.Show();
-                            this.Hide();
-                            break;
+                        string storedPassword = reader["password"].ToString();
 
-                        case "operator":
-                            Operator operatorForm = new Operator();
-                            operatorForm.Show();
-                            this.Hide();
-                            break;
+                        if (password == storedPassword)
+                        {
+                            string userLevel = reader["level"].ToString();
 
-                        case "user":
-                            User userForm = new User();
-                            userForm.Show();
-                            this.Hide();
-                            break;
+                            switch (userLevel.ToLower())
+                            {
+                                case "admin":
+                                    Admin adminForm = new Admin();
+                                    adminForm.Show();
+                                    this.Hide();
 
-                        default:
-                            MessageBox.Show("Peran pengguna tidak valid.");
-                            break;
+                                    break;
+
+                                case "operator":
+                                    Operator operatorForm = new Operator();
+                                    operatorForm.Show();
+                                    this.Hide();
+                                    break;
+
+                                case "user":
+                                    User userForm = new User();
+                                    userForm.Show();
+                                    this.Hide();
+                                    break;
+
+                                default:
+                                    MessageBox.Show("Invalid user");
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid username and password");
+                        }
                     }
-                }
-                else
-                {
-                    MessageBox.Show("Kombinasi username dan password tidak valid.");
+                    else
+                    {
+                        MessageBox.Show("Username not found");
+                    }
                 }
             }
             catch (Exception ex)
@@ -88,10 +97,24 @@ namespace Presensi
                 conn.Close();
             }
         }
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
+
         private void btnClear_Click_1(object sender, EventArgs e)
         {
             txtUsername.Text = "";
             txtPassword.Text = "";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

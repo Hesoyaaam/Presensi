@@ -35,6 +35,8 @@
             // 
             // dataGridViewJadwal
             // 
+            this.dataGridViewJadwal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridViewJadwal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewJadwal.Location = new System.Drawing.Point(0, 70);
             this.dataGridViewJadwal.Name = "dataGridViewJadwal";

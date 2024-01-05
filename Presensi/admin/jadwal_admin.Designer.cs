@@ -39,6 +39,7 @@
             this.btnTambahJadwal = new System.Windows.Forms.Button();
             this.dataGridViewJadwal = new System.Windows.Forms.DataGridView();
             this.btnExport = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJadwal)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,7 +98,7 @@
             // 
             this.btnHapusJadwal.Location = new System.Drawing.Point(320, 134);
             this.btnHapusJadwal.Name = "btnHapusJadwal";
-            this.btnHapusJadwal.Size = new System.Drawing.Size(75, 23);
+            this.btnHapusJadwal.Size = new System.Drawing.Size(80, 30);
             this.btnHapusJadwal.TabIndex = 71;
             this.btnHapusJadwal.Text = "DELETE";
             this.btnHapusJadwal.UseVisualStyleBackColor = true;
@@ -107,7 +108,7 @@
             // 
             this.btnUbahJadwal.Location = new System.Drawing.Point(320, 88);
             this.btnUbahJadwal.Name = "btnUbahJadwal";
-            this.btnUbahJadwal.Size = new System.Drawing.Size(75, 23);
+            this.btnUbahJadwal.Size = new System.Drawing.Size(80, 30);
             this.btnUbahJadwal.TabIndex = 70;
             this.btnUbahJadwal.Text = "EDIT";
             this.btnUbahJadwal.UseVisualStyleBackColor = true;
@@ -117,7 +118,7 @@
             // 
             this.btnTambahJadwal.Location = new System.Drawing.Point(320, 42);
             this.btnTambahJadwal.Name = "btnTambahJadwal";
-            this.btnTambahJadwal.Size = new System.Drawing.Size(75, 23);
+            this.btnTambahJadwal.Size = new System.Drawing.Size(80, 30);
             this.btnTambahJadwal.TabIndex = 69;
             this.btnTambahJadwal.Text = "ADD";
             this.btnTambahJadwal.UseVisualStyleBackColor = true;
@@ -125,6 +126,8 @@
             // 
             // dataGridViewJadwal
             // 
+            this.dataGridViewJadwal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridViewJadwal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewJadwal.Location = new System.Drawing.Point(0, 170);
             this.dataGridViewJadwal.Name = "dataGridViewJadwal";
@@ -135,19 +138,30 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(421, 134);
+            this.btnExport.Location = new System.Drawing.Point(492, 134);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.Size = new System.Drawing.Size(80, 30);
             this.btnExport.TabIndex = 78;
             this.btnExport.Text = "EXPORT";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(406, 134);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(80, 30);
+            this.btnClear.TabIndex = 79;
+            this.btnClear.Text = "CLEAR";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // jadwal_admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtKeterangan);
@@ -181,5 +195,6 @@
         private System.Windows.Forms.Button btnTambahJadwal;
         private System.Windows.Forms.DataGridView dataGridViewJadwal;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnClear;
     }
 }
